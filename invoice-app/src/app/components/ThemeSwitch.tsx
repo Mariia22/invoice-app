@@ -25,11 +25,13 @@ export default function ThemeSwitch() {
       break
   }
 
-  if (resolvedTheme === "light") {
-    return (domLoaded && <Image src={src} width={20} height={20} alt="light mode" priority={false} onClick={() => setTheme('dark')} />)
+  function handleClick() {
+    resolvedTheme === "light" ? setTheme('dark') : setTheme('light')
   }
 
-  if (resolvedTheme === "dark") {
-    return (domLoaded && <Image src={src} width={20} height={20} alt="dark mode" priority={false} onClick={() => setTheme('light')} />)
-  }
+  return (
+    domLoaded &&
+    <Image src={src} width={20} height={20} alt="light mode" priority={false} onClick={handleClick} className="hover:cursor-pointer" />
+  )
+
 }

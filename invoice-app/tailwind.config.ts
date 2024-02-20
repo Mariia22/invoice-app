@@ -21,7 +21,8 @@ const config: Config = {
       secondaryDark: "#888EB0",
       paidColor: "#33D69F",
       pendingColor: "#FF8F00",
-      draftColor: "#373B53"
+      draftColor: "#373B53",
+      borderColor: "#494E6E"
     },
     extend: {}
   },

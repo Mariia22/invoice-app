@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { League_Spartan } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import Header from "./ui/shared/Header";
 
 const font = League_Spartan({ subsets: ["latin"] });
 
@@ -17,8 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={font.className} suppressHydrationWarning>
-      <body className="bg-white text-black dark:bg-black dark:text-white">
+      <head>
+        <link rel="shortcut icon" href="/assets/favicon.png" />
+      </head>
+      <body className="flex flex-col font-medium w-screen overflow-hidden bg-background text-darkText dark:bg-darkText dark:text-background xl:flex-row 2xl:justify-center">
         <Providers>
+          <Header />
           {children}
         </Providers>
       </body>

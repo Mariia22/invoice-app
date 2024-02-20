@@ -12,6 +12,7 @@ const config: Config = {
       darkText: "#141625",
       background: "#F8F8FB",
       headerBackground: "#252945",
+      headerText: "#0C0E16",
       primary: "#7C5DFA",
       primaryPale: "#9277FF",
       error: "#EC5757",

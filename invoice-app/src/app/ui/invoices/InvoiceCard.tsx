@@ -1,4 +1,5 @@
 import { Invoice } from "@/app/lib/types";
+import InvoiceStatus from "./InvoiceStatus";
 
 
 export default function InvoiceCard({ id, clientName, createdAt, total, status }: Invoice) {
@@ -10,6 +11,6 @@ export default function InvoiceCard({ id, clientName, createdAt, total, status }
       </div>
       <p>{clientName}</p>
       <p>{total}</p>
-      <p>{status}</p>
+      <InvoiceStatus status={status} />
     </section>)
 }

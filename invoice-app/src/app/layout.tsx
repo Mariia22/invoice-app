@@ -21,7 +21,7 @@ export default function RootLayout({
       <head>
         <link rel="shortcut icon" href="/assets/favicon.png" />
       </head>
-      <body className="flex flex-col font-medium w-screen overflow-hidden bg-background text-darkText dark:bg-darkText dark:text-background text-[13px] xl:flex-row 2xl:justify-center">
+      <body className="flex flex-col font-medium w-screen bg-background text-darkText dark:bg-darkText dark:text-background text-[13px] xl:flex-row 2xl:justify-center">
         <Providers>
           <Header />
           <main className="mt-8 mx-6 mb-6">

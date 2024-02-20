@@ -23,7 +23,8 @@ const config: Config = {
       paidColor: "#33D69F",
       pendingColor: "#FF8F00",
       draftColor: "#373B53",
-      borderColor: "#494E6E"
+      borderColor: "#494E6E",
+      cardColor: "#1E2139"
     },
     extend: {}
   },

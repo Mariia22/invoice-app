@@ -6,18 +6,18 @@ export default function Invoices() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-headerText">Invoices</h1>
+          <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>
           <p className="text-secondaryDark">{data.length} invoices</p>
         </div>
-        <div className="flex">
+        <div className="flex items-center">
           <div className="w-[53px] h-[15px]">Filter</div>
           <ButtonAdd />
         </div>
       </div>
       <div>
-        {data.map(invoice => (<InvoiceCard key={invoice.id} />))}
+        {data.map(invoice => (<InvoiceCard key={invoice.id} {...invoice} />))}
       </div>
     </div>
   );

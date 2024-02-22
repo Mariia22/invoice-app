@@ -1,25 +1,16 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
 import { formatDate, formatPrice } from "@/app/lib/functions";
 import data from "../../data.json";
-import ButtonBack from "@/app/ui/invoices/ButtonBack";
+import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
 import InvoiceStatus from "@/app/ui/invoices/InvoiceStatus";
 import { Invoice } from "@/app/lib/types";
 import Subtitle from "@/app/ui/shared/Subtitle";
-import Button from '@/app/ui/shared/Button';
+import ButtonEdit from "@/app/ui/invoices/Buttons/ButtonEdit";
+import ButtonDelete from "@/app/ui/invoices/Buttons/ButtonDelete";
+import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
+import SubtitleBold from "@/app/ui/shared/SubtitleBold";
 
 export default function InvoicePage({ params }: { params: { id: string } }) {
-  const router = useRouter()
   const invoice: Invoice | undefined = data.find(item => item.id === params.id)
-
-  function deleteInvoice() {
-    console.log("delete")
-  }
-
-  function markInvoice() {
-    console.log("Mark as Paid")
-  }
 
   return (
     <>
@@ -41,15 +32,15 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
               <div className="flex justify-start mb-8">
                 <div className="flex flex-col w-6/12">
                   <Subtitle subtitle="Invoice Date" />
-                  <p className="font-bold text-headerText text-base">{formatDate(invoice.createdAt)}</p>
+                  <SubtitleBold subtitle={formatDate(invoice.createdAt)} />
                   <Subtitle subtitle="Payment Due" />
-                  <p className="font-bold text-headerText text-base">{formatDate(invoice.paymentDue)}</p>
+                  <SubtitleBold subtitle={formatDate(invoice.paymentDue)} />
                   <Subtitle subtitle="Sent to" />
-                  <p className="font-bold text-headerText text-base">{invoice.clientEmail}</p>
+                  <SubtitleBold subtitle={formatDate(invoice.clientEmail)} />
                 </div>
                 <div className="flex flex-col">
                   <Subtitle subtitle="Bill To" />
-                  <p className="font-bold text-headerText text-base">{invoice.clientName}</p>
+                  <SubtitleBold subtitle={formatDate(invoice.clientName)} />
                   <p className="mt-2">{invoice.clientAddress.street}</p>
                   <p>{invoice.clientAddress.city}</p>
                   <p>{invoice.clientAddress.postCode}</p>
@@ -60,10 +51,10 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
                 {invoice.items.length > 0 && (invoice.items.map(item => (
                   <div className="flex items-center justify-between mb-6" key={item.name}>
                     <div>
-                      <p className="font-bold text-base text-headerText">{item.name}</p>
+                      <SubtitleBold subtitle={formatDate(item.name)} />
                       <p className="font-bold text-base text-secondary">{item.quantity} x {formatPrice(item.price)}</p>
                     </div>
-                    <div className="font-bold text-base text-headerText">{formatPrice(item.total)}</div>
+                    <SubtitleBold subtitle={formatPrice(item.total)} />
                   </div>
                 )))}
               </div>
@@ -77,9 +68,9 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
         )}
       </div>
       <div className="flex bg-text px-5 py-5">
-        <Button name="Edit" bgColor="tableColor" textColor="secondary" action={() => router.push(`/invoices/${params.id}/edit`)} />
-        <Button name="Delete" bgColor="contrastPale" textColor="secondary" action={() => deleteInvoice()} />
-        <Button name="Mark as Paid" bgColor="primary" textColor="text" action={() => markInvoice()} />
+        <ButtonEdit id={params.id} />
+        <ButtonDelete id={params.id} />
+        <ButtonPaid id={params.id} />
       </div>
     </>
   )

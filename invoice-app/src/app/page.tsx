@@ -1,4 +1,4 @@
-import ButtonAdd from "./ui/invoices/ButtonAdd";
+import ButtonAdd from "./ui/invoices/Buttons/ButtonAdd";
 import InvoiceCard from "./ui/invoices/InvoiceCard";
 import data from "./data.json"
 import EmptyPage from "./ui/invoices/EmptyPage";

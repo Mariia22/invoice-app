@@ -12,7 +12,7 @@ export default function Invoices() {
   }
 
   return (
-    <div>
+    <div className="mt-8 mx-6 mb-6">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>

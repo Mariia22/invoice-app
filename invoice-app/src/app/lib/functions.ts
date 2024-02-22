@@ -4,7 +4,7 @@ export function formatPrice(price: number): string {
     currency: "GBP"
   });
 
-  return pounds.format(price);
+  return pounds.format(price).replace(/^(\D+)/, '$1 ').replace(/\s+/, ' ');
 }
 
 export function formatDate(data: string): string {

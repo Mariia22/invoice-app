@@ -15,8 +15,6 @@ const config: Config = {
       headerText: "#0C0E16",
       primary: "#7C5DFA",
       primaryPale: "#9277FF",
-      error: "#EC5757",
-      errorPale: "#FF9797",
       secondary: "#7E88C3",
       secondaryPale: "#DFE3FA",
       secondaryDark: "#888EB0",
@@ -24,7 +22,10 @@ const config: Config = {
       pendingColor: "#FF8F00",
       draftColor: "#373B53",
       borderColor: "#494E6E",
-      cardColor: "#1E2139"
+      cardColor: "#1E2139",
+      tableColor: "#F9FAFE",
+      contrast: "#EC5757",
+      contrastPale: "#FF9797"
     },
     extend: {}
   },

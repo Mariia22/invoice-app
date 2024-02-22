@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="flex flex-col font-medium w-screen bg-background text-darkText dark:bg-darkText dark:text-background text-[13px] xl:flex-row 2xl:justify-center">
         <Providers>
           <Header />
-          <main className="mt-8 mx-6 mb-6">
+          <main>
             {children}
           </main>
         </Providers>

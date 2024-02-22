@@ -25,9 +25,14 @@ const config: Config = {
       cardColor: "#1E2139",
       tableColor: "#F9FAFE",
       contrast: "#EC5757",
-      contrastPale: "#FF9797"
+      contrastPale: "#FF9797",
+      black: "#000000"
     },
-    extend: {}
+    extend: {
+      boxShadow: {
+        modal: "0 10px 10px -10px rgba(72, 84, 159, 0.1)"
+      }
+    }
   },
   plugins: [],
   darkMode: "class"

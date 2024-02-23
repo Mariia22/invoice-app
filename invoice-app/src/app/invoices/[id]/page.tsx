@@ -16,7 +16,7 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="mt-8 mx-6 mb-6">
+      <div className="py-8 px-6 bg-background text-darkText dark:bg-darkText dark:text-background">
         <ButtonBack />
         {invoice && (
           <>

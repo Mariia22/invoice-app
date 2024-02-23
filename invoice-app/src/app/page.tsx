@@ -12,8 +12,8 @@ export default function Invoices() {
   }
 
   return (
-    <div className="mt-8 mx-6 mb-6">
-      <div className="flex items-center justify-between mb-8">
+    <div className="py-8 px-6 bg-background text-darkText dark:bg-darkText dark:text-background">
+      <div className="flex items-center justify-between pb-8">
         <div>
           <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>
           <p className="text-secondaryDark">{numberOfInvoices} invoices</p>

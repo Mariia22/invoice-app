@@ -9,6 +9,8 @@ import ButtonDelete from "@/app/ui/invoices/Buttons/ButtonDelete";
 import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
 import PortalDeleteInvoice from "@/app/ui/invoices/Modal/PortalDeleteInvoice";
+import IdHeadline from "@/app/ui/shared/IdHeadline";
+import Footer from "@/app/ui/shared/Footer";
 
 export default function InvoicePage({ params }: { params: { id: string } }) {
   const invoice: Invoice | undefined = data.find(item => item.id === params.id)
@@ -24,7 +26,7 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
               <InvoiceStatus status={invoice.status} />
             </div>
             <div className="flex flex-col justify-between w-full px-6 py-6 mb-14 bg-text text-secondary rounded-md">
-              <h2 className="font-bold text-headerText"><span className="text-secondary">#</span>{invoice.id}</h2>
+              <IdHeadline id={invoice.id}></IdHeadline>
               <p className="mb-8">{invoice.description}</p>
               <p>{invoice.senderAddress.street}</p>
               <p>{invoice.senderAddress.city}</p>
@@ -68,11 +70,11 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
           </>
         )}
       </div>
-      <div className="flex items-center justify-center bg-text px-5 py-5">
+      <Footer>
         <ButtonEdit id={params.id} />
         <ButtonDelete />
         <ButtonPaid id={params.id} />
-      </div>
+      </Footer>
       <PortalDeleteInvoice id={params.id} />
     </>
   )

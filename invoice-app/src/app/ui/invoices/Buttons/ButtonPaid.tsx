@@ -5,5 +5,5 @@ export default function ButtonPaid({ id }: { id: string }) {
     console.log("Mark as Paid", id)
   }
 
-  return (<button className={`bg-primary text-text py-3 px-5 mx-2 rounded-3xl font-bold`} onClick={() => markInvoice()}>Mark as Paid</button>)
+  return (<button className={`bg-primary text-text text-sm py-3 px-4 mx-2 rounded-3xl font-bold`} onClick={() => markInvoice()}>Mark as Paid</button>)
 }

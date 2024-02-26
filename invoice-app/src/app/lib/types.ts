@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction} from "react";
+
 export type Invoice = {
   id: string;
   createdAt: string;
@@ -25,4 +27,9 @@ type Item = {
   quantity:number;
   price: number;
   total: number;
+}
+
+export type ModalType = {
+  isModalOpen: boolean;
+  setOpenModal: Dispatch<SetStateAction<boolean>>
 }

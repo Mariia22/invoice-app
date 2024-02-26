@@ -8,8 +8,7 @@ import ButtonEdit from "@/app/ui/invoices/Buttons/ButtonEdit";
 import ButtonDelete from "@/app/ui/invoices/Buttons/ButtonDelete";
 import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
-import Modal from "@/app/ui/shared/Modal";
-import { Suspense } from "react";
+import PortalDeleteInvoice from "@/app/ui/invoices/Modal/PortalDeleteInvoice";
 
 export default function InvoicePage({ params }: { params: { id: string } }) {
   const invoice: Invoice | undefined = data.find(item => item.id === params.id)
@@ -71,12 +70,10 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
       </div>
       <div className="flex items-center justify-center bg-text px-5 py-5">
         <ButtonEdit id={params.id} />
-        <ButtonDelete id={params.id} />
+        <ButtonDelete />
         <ButtonPaid id={params.id} />
       </div>
-      <Suspense fallback={<>Loading...</>}>
-        <Modal />
-      </Suspense>
+      <PortalDeleteInvoice id={params.id} />
     </>
   )
 }

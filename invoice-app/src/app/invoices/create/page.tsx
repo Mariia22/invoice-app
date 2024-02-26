@@ -1,7 +1,7 @@
 import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
-import ButtonCancel from "@/app/ui/invoices/Buttons/EditCreatePage/ButtonCancel";
-import ButtonSaveChanges from "@/app/ui/invoices/Buttons/EditCreatePage/ButtonSaveChanges";
-import ButtonSaveDraft from "@/app/ui/invoices/Buttons/EditCreatePage/ButtonSaveDraft";
+import ButtonCancel from "@/app/ui/invoices/Buttons/ButtonCancel";
+import ButtonSaveChanges from "@/app/ui/invoices/Buttons/ButtonSaveChanges";
+import ButtonSaveDraft from "@/app/ui/invoices/Buttons/ButtonSaveDraft";
 import FormInvoice from "@/app/ui/invoices/FormInvoice";
 import Footer from "@/app/ui/shared/Footer";
 

@@ -2,7 +2,7 @@ import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
 import ButtonCancel from "@/app/ui/invoices/Buttons/ButtonCancel";
 import ButtonSaveChanges from "@/app/ui/invoices/Buttons/ButtonSaveChanges";
 import ButtonSaveDraft from "@/app/ui/invoices/Buttons/ButtonSaveDraft";
-import FormInvoice from "@/app/ui/invoices/FormInvoice";
+import FormInvoice from "@/app/ui/invoices/Form/FormInvoice";
 import Footer from "@/app/ui/shared/Footer";
 
 export default function CreatePage({ params }: { params: { id: string } }) {

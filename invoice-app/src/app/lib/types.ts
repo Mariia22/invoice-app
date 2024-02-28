@@ -15,7 +15,7 @@ export type Invoice = {
 };
 
 
-type Address = {
+export type Address = {
   street: string;
   city: string;
   postCode: string;
@@ -33,3 +33,21 @@ export type ModalType = {
   isModalOpen: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
+
+export type FormInput = {
+  streetAddress: string
+  city: string
+  postCode: string
+  country: string
+}
+
+export type FormField = {
+  id: number
+  name: keyof FormInput
+  defaultValue: string | number
+  label: string
+  type: string
+  required: boolean
+  gridCols: number
+}
+

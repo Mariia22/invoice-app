@@ -1,4 +1,4 @@
-import { FormField } from "@/app/lib/types";
+import { FormField, Invoice } from "@/app/lib/types";
 
 export const newInvoice = {
   id: "",
@@ -22,6 +22,25 @@ export const newInvoice = {
     country: "",
   },
   items: []
+}
+
+export const defaultFormValues = (invoice:Invoice) => {
+  return {
+  senderStreetAddress: invoice.senderAddress.street,
+  senderCity: invoice.senderAddress.city,
+  senderPostCode: invoice.senderAddress.postCode,
+  senderCountry: invoice.senderAddress.country,
+  clientName: invoice.clientName,
+  clientEmail: invoice.clientEmail,
+  clientStreetAddress: invoice.clientAddress.street,
+  clientCity: invoice.clientAddress.city,
+  clientPostCode: invoice.clientAddress.postCode,
+  clientCountry: invoice.clientAddress.country,
+  invoiceData: invoice.createdAt,
+  paymentTerms: invoice.paymentDue,
+  projectDescription: invoice.description,
+  items: invoice.items
+  }
 }
 
 export const billFromData:FormField[]= [
@@ -140,7 +159,7 @@ export const billFromData:FormField[]= [
   export const itemList:FormField[]= [
     {
       id: 1,
-      name: "invoiceData",
+      name: "name",
       label: "Item Name",
       type: "text",
       required: true,
@@ -148,7 +167,7 @@ export const billFromData:FormField[]= [
     },
     {
       id: 2,
-      name: "paymentTerms",
+      name: "quantity",
       label: "Qty.",
       type: "text",
       required: true,
@@ -156,8 +175,16 @@ export const billFromData:FormField[]= [
     },
     {
       id: 3,
-      name: "projectDescription",
+      name: "price",
       label: "Price",
+      type: "text",
+      required: true,
+      gridCols: 1,
+    },
+    {
+      id: 4,
+      name: "total",
+      label: "Total",
       type: "text",
       required: true,
       gridCols: 1,

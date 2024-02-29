@@ -3,7 +3,7 @@
 import { FormInput } from "@/app/lib/types"
 import { SubmitHandler, useForm } from "react-hook-form"
 import data from "../../../data.json"
-import { billFromData, billToData, invoiceData, itemList, newInvoice } from "./formData"
+import { billFromData, billToData, defaultFormValues, invoiceData, itemList, newInvoice } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
 import Footer from "../../shared/Footer"
@@ -14,25 +14,9 @@ import FormFields from "./FormFields"
 
 export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
   //temporarily, before Redux
-  const invoice = isEditing ? data[0] : newInvoice;
+  const invoice = isEditing ? data[1] : newInvoice;
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormInput>({
-    defaultValues: {
-      senderStreetAddress: invoice.senderAddress.street,
-      senderCity: invoice.senderAddress.city,
-      senderPostCode: invoice.senderAddress.postCode,
-      senderCountry: invoice.senderAddress.country,
-      clientName: invoice.clientName,
-      clientEmail: invoice.clientEmail,
-      clientStreetAddress: invoice.clientAddress.street,
-      clientCity: invoice.clientAddress.city,
-      clientPostCode: invoice.clientAddress.postCode,
-      clientCountry: invoice.clientAddress.country,
-      invoiceData: invoice.createdAt,
-      paymentTerms: invoice.paymentDue,
-      projectDescription: invoice.description,
-    },
-  })
+  const { register, handleSubmit, formState: { errors } } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
 
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)
 
@@ -51,7 +35,7 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
       </FormSection>
       <FormSection marginTop={11}>
         <h3>Item List</h3>
-        <FormFields data={itemList} register={register} errors={errors} />
+        {invoice.items.map(invoice => (<FormFields data={itemList} register={register} errors={errors} />))}
       </FormSection>
       <Footer>
         {isEditing

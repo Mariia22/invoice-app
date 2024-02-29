@@ -49,20 +49,22 @@ export type FormInput = {
   invoiceData: string
   paymentTerms: string
   projectDescription: string
-  items: [
-    name: string,
-    quantity: number,
-    price: number,
-    total: number
-  ]
+  items: Item[]
 }
 
 export type FormField = {
   id: number
-  name: keyof FormInput
+  name: DeepKeys<FormInput>
   label: string
   type: string
   required: boolean
   gridCols: number
 }
 
+type DeepKeys<T> = T extends object
+  ? {
+      [K in keyof T]-?: K extends string | number
+        ? `${K}` | `${K}.${DeepKeys<T[K]>}`
+        : never;
+    }[keyof T]
+  : never;

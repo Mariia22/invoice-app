@@ -1,11 +1,33 @@
-import { FormField, Invoice } from "@/app/lib/types";
+import { FormField } from "@/app/lib/types";
 
-export function buildFormSectionBillFrom (invoice:Invoice):FormField[] {
-  return [
+export const newInvoice = {
+  id: "",
+  createdAt: "",
+  paymentDue: "",
+  clientName: "",
+  description: "",
+  total: 0,
+  status: "",
+  clientEmail: "",
+  senderAddress: {
+    street: "",
+    city: "",
+    postCode: "",
+    country: "",
+  },
+  clientAddress: {
+    street: "",
+    city: "",
+    postCode: "",
+    country: "",
+  },
+  items: []
+}
+
+export const billFromData:FormField[]= [
     {
       id: 1,
-      name: "streetAddress",
-      defaultValue: invoice.senderAddress.street,
+      name: "senderStreetAddress",
       label: "Street Address",
       type: "text",
       required: true,
@@ -13,8 +35,7 @@ export function buildFormSectionBillFrom (invoice:Invoice):FormField[] {
     },
     {
       id: 2,
-      name: "city",
-      defaultValue: invoice.senderAddress.city,
+      name: "senderCity",
       label: "City",
       type: "text",
       required: true,
@@ -22,8 +43,7 @@ export function buildFormSectionBillFrom (invoice:Invoice):FormField[] {
     },
     {
       id: 3,
-      name: "postCode",
-      defaultValue: invoice.senderAddress.postCode,
+      name: "senderPostCode",
       label: "Post Code",
       type: "text",
       required: true,
@@ -31,100 +51,10 @@ export function buildFormSectionBillFrom (invoice:Invoice):FormField[] {
     },
     {
       id: 4,
-      name: "country",
-      defaultValue: invoice.senderAddress.country,
+      name: "senderCountry",
       label: "Country",
       type: "text",
       required: true,
       gridCols: 2,
     }
   ]
-}
-
-export function buildFormSectionBillTo (invoice:Invoice):FormField[] {
-  return [
-    {
-      id: 1,
-      name: "streetAddress",
-      defaultValue: invoice.clientAddress.street,
-      label: "Street Address",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    },
-    {
-      id: 2,
-      name: "streetAddress",
-      defaultValue: invoice.clientAddress.street,
-      label: "Street Address",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    }
-  ]
-}
-
-export function buildFormSectionInvoiceData (invoice:Invoice):FormField[] {
-  return [
-    {
-      id: 1,
-      name: "streetAddress",
-      defaultValue: invoice.clientAddress.street,
-      label: "Street Address",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    },
-    {
-      id: 2,
-      name: "streetAddress",
-      defaultValue: invoice.clientAddress.street,
-      label: "Street Address",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    }
-  ]
-}
-
-export function buildFormSectionItemList (invoice:Invoice):FormField[] {
-  return [
-    {
-      id: 1,
-      name: "streetAddress",
-      defaultValue: invoice.senderAddress.street,
-      label: "Street Address",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    },
-    {
-      id: 2,
-      name: "city",
-      defaultValue: invoice.senderAddress.city,
-      label: "City",
-      type: "text",
-      required: true,
-      gridCols: 2,
-    },
-    {
-      id: 3,
-      name: "postCode",
-      defaultValue: invoice.senderAddress.postCode,
-      label: "Post Code",
-      type: "text",
-      required: true,
-      gridCols: 2,
-    },
-    {
-      id: 4,
-      name: "country",
-      defaultValue: invoice.senderAddress.country,
-      label: "Country",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    }
-  ]
-}
-

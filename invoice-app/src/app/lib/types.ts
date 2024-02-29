@@ -35,16 +35,15 @@ export type ModalType = {
 }
 
 export type FormInput = {
-  streetAddress: string
-  city: string
-  postCode: string
-  country: string
+  senderStreetAddress: string
+  senderCity: string
+  senderPostCode: string
+  senderCountry: string
 }
 
 export type FormField = {
   id: number
   name: keyof FormInput
-  defaultValue: string | number
   label: string
   type: string
   required: boolean

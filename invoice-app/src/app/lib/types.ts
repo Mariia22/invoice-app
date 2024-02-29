@@ -1,3 +1,4 @@
+import { invoiceData } from './../ui/invoices/Form/formData';
 import { Dispatch, SetStateAction} from "react";
 
 export type Invoice = {
@@ -39,6 +40,21 @@ export type FormInput = {
   senderCity: string
   senderPostCode: string
   senderCountry: string
+  clientName: string
+  clientEmail: string
+  clientStreetAddress: string
+  clientCity: string
+  clientPostCode: string
+  clientCountry: string
+  invoiceData: string
+  paymentTerms: string
+  projectDescription: string
+  items: [
+    name: string,
+    quantity: number,
+    price: number,
+    total: number
+  ]
 }
 
 export type FormField = {

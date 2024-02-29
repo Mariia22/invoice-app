@@ -3,13 +3,14 @@
 import { FormInput } from "@/app/lib/types"
 import { SubmitHandler, useForm } from "react-hook-form"
 import data from "../../../data.json"
-import { billFromData, newInvoice } from "./formData"
+import { billFromData, billToData, invoiceData, itemList, newInvoice } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
 import Footer from "../../shared/Footer"
 import ButtonCancel from "../Buttons/ButtonCancel"
 import ButtonSaveChanges from "../Buttons/ButtonSaveChanges"
 import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
+import FormFields from "./FormFields"
 
 export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
   //temporarily, before Redux
@@ -20,7 +21,16 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
       senderStreetAddress: invoice.senderAddress.street,
       senderCity: invoice.senderAddress.city,
       senderPostCode: invoice.senderAddress.postCode,
-      senderCountry: invoice.senderAddress.country
+      senderCountry: invoice.senderAddress.country,
+      clientName: invoice.clientName,
+      clientEmail: invoice.clientEmail,
+      clientStreetAddress: invoice.clientAddress.street,
+      clientCity: invoice.clientAddress.city,
+      clientPostCode: invoice.clientAddress.postCode,
+      clientCountry: invoice.clientAddress.country,
+      invoiceData: invoice.createdAt,
+      paymentTerms: invoice.paymentDue,
+      projectDescription: invoice.description,
     },
   })
 
@@ -30,21 +40,18 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
     <form className="flex flex-col justify-start items-center w-full m-auto" onSubmit={handleSubmit(onSubmit)}>
       <FormSection marginTop={6}>
         <FormHeader header="Bill From" />
-        {billFromData.map((field) => (
-          <div key={field.id} className={`text-left flex flex-col w-full col-span-${field.gridCols}`}>
-            <label className="text-secondary">{field.label}</label>
-            <input
-              {...register(field.name, {
-                required: field.required,
-              })}
-              className={`border border-gray-300 text-sm font-semibold mb-1 max-w-full w-full outline-none rounded-md m-0 py-3 px-4 md:py-3 md:px-4 md:mb-0 focus:border-red-500 col-span-${field.gridCols}}`}
-              type={field.type}
-            />
-            {errors[field.name] && (
-              <span>This field is required</span>
-            )}
-          </div>
-        ))}
+        <FormFields data={billFromData} register={register} errors={errors} />
+      </FormSection>
+      <FormSection marginTop={6}>
+        <FormHeader header="Bill To" />
+        <FormFields data={billToData} register={register} errors={errors} />
+      </FormSection>
+      <FormSection marginTop={10}>
+        <FormFields data={invoiceData} register={register} errors={errors} />
+      </FormSection>
+      <FormSection marginTop={11}>
+        <h3>Item List</h3>
+        <FormFields data={itemList} register={register} errors={errors} />
       </FormSection>
       <Footer>
         {isEditing

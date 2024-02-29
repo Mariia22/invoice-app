@@ -7,7 +7,7 @@ export default function FormFields({ data, register, errors }: { data: FormField
       {
         data.map((field) => (
           <div key={field.id} className={`text-left flex flex-col w-full col-span-${field.gridCols}`}>
-            <label className="text-secondary text-sm leading-4 mt-4 mb-2">{field.label}</label>
+            <label className="field-label">{field.label}</label>
             <input
               {...register(field.name, {
                 required: field.required,

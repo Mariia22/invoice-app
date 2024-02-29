@@ -23,7 +23,7 @@ export type Address = {
   country: string;
 }
 
-type Item = {
+export type Item = {
   name: string;
   quantity:number;
   price: number;
@@ -54,7 +54,7 @@ export type FormInput = {
 
 export type FormField = {
   id: number
-  name: DeepKeys<FormInput>
+  name: keyof FormInput
   label: string
   type: string
   required: boolean

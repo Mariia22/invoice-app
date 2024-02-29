@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .field {
+    @apply border border-secondaryPale text-headerText text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-4;
+  }
+  .field-label {
+    @apply text-secondary text-sm leading-4 mt-4 mb-2
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
+

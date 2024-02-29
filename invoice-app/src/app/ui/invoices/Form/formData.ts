@@ -155,38 +155,3 @@ export const billFromData:FormField[]= [
       gridCols: 1,
     }
   ]
-
-  export const itemList:FormField[]= [
-    {
-      id: 1,
-      name: "name",
-      label: "Item Name",
-      type: "text",
-      required: true,
-      gridCols: 2,
-    },
-    {
-      id: 2,
-      name: "quantity",
-      label: "Qty.",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    },
-    {
-      id: 3,
-      name: "price",
-      label: "Price",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    },
-    {
-      id: 4,
-      name: "total",
-      label: "Total",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    }
-  ]

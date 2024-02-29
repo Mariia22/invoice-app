@@ -1,9 +1,9 @@
 'use client'
 
-import { FormInput } from "@/app/lib/types"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { FormInput, Item } from "@/app/lib/types"
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import data from "../../../data.json"
-import { billFromData, billToData, defaultFormValues, invoiceData, itemList, newInvoice } from "./formData"
+import { billFromData, billToData, defaultFormValues, invoiceData, newInvoice } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
 import Footer from "../../shared/Footer"
@@ -11,13 +11,15 @@ import ButtonCancel from "../Buttons/ButtonCancel"
 import ButtonSaveChanges from "../Buttons/ButtonSaveChanges"
 import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
 import FormFields from "./FormFields"
+import FormItemFields from "./FormItemFields"
 
 export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
-  //temporarily, before Redux
   const invoice = isEditing ? data[1] : newInvoice;
-
-  const { register, handleSubmit, formState: { errors } } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
-
+  const { register, handleSubmit, formState: { errors }, control } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "items"
+  });
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)
 
   return (
@@ -35,8 +37,8 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
       </FormSection>
       <FormSection marginTop={11}>
         <h3>Item List</h3>
-        {invoice.items.map(invoice => (<FormFields data={itemList} register={register} errors={errors} />))}
-      </FormSection>
+        <FormItemFields fields={fields} register={register} errors={errors} remove={remove} />
+      </FormSection >
       <Footer>
         {isEditing
           ? <>
@@ -49,6 +51,6 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
             <ButtonSaveChanges name="Save & Send" />
           </>}
       </Footer>
-    </form>
+    </form >
   )
 }

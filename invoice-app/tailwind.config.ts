@@ -31,6 +31,9 @@ const config: Config = {
     extend: {
       boxShadow: {
         modal: "0 10px 10px -10px rgba(72, 84, 159, 0.1)"
+      },
+      backgroundImage: {
+        "delete-button": "url('/assets/icon-delete.svg')"
       }
     }
   },

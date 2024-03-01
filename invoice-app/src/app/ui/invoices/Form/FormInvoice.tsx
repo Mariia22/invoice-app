@@ -1,6 +1,6 @@
 'use client'
 
-import { FormInput, Item } from "@/app/lib/types"
+import { FormInput } from "@/app/lib/types"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import data from "../../../data.json"
 import { billFromData, billToData, defaultFormValues, invoiceData, newInvoice } from "./formData"
@@ -15,12 +15,16 @@ import FormItemFields from "./FormItemFields"
 
 export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
   const invoice = isEditing ? data[1] : newInvoice;
-  const { register, handleSubmit, formState: { errors }, control } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
+  const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({
     control,
     name: "items"
   });
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)
+
+  function addNewItem() {
+    append({ name: "", quantity: 0, price: 0, total: 0 })
+  }
 
   return (
     <form className="flex flex-col justify-start items-center w-full m-auto" onSubmit={handleSubmit(onSubmit)}>
@@ -35,9 +39,10 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
       <FormSection marginTop={10}>
         <FormFields data={invoiceData} register={register} errors={errors} />
       </FormSection>
-      <FormSection marginTop={11}>
-        <h3>Item List</h3>
-        <FormItemFields fields={fields} register={register} errors={errors} remove={remove} />
+      <FormSection marginTop={16}>
+        <h3 className="font-bold text-lg text-secondaryDark">Item List</h3>
+        <FormItemFields fields={fields} getValues={getValues} register={register} errors={errors} remove={remove} setValue={setValue} />
+        <button type="button" className="text-base bg-tableColor text-secondary w-[327px] h-[48px] rounded-lg mt-12 mb-[88px] mx-auto" onClick={addNewItem}>+ Add New Button</button>
       </FormSection >
       <Footer>
         {isEditing

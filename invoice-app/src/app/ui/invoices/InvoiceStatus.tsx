@@ -1,4 +1,8 @@
+"use client";
+import { useTheme } from "next-themes";
+
 export default function InvoiceStatus({ status }: { status: string }) {
+  const { resolvedTheme } = useTheme();
   let color, bgColor
 
   if (status === "paid") {
@@ -8,8 +12,13 @@ export default function InvoiceStatus({ status }: { status: string }) {
     bgColor = "bg-pendingColor"
     color = "text-pendingColor"
   } else {
-    bgColor = "bg-draftColor"
-    color = "text-draftColor"
+    if (resolvedTheme === "light") {
+      bgColor = "bg-draftColor"
+      color = "text-draftColor"
+    } else {
+      bgColor = "bg-secondaryPale"
+      color = "text-secondaryPale"
+    }
   }
 
   return (<div className={`flex items-center justify-center justify-self-end w-[104px] h-[40px] ${bgColor} bg-opacity-5 rounded-md`}>

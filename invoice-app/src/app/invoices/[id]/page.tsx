@@ -21,11 +21,11 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
         <ButtonBack />
         {invoice && (
           <>
-            <div className="flex items-center justify-between w-full px-6 py-6 mt-8 mb-4 bg-text rounded-md">
+            <div className="flex items-center justify-between w-full px-6 py-6 mt-8 mb-4 bg-text dark:bg-cardColor rounded-md shadow-modal">
               <p>Status</p>
               <InvoiceStatus status={invoice.status} />
             </div>
-            <div className="flex flex-col justify-between w-full px-6 py-6 mb-14 bg-text text-secondary rounded-md">
+            <div className="flex flex-col justify-between w-full px-6 py-6 mb-14 bg-text dark:bg-cardColor text-sm text-secondary dark:text-secondaryPale rounded-md shadow-modal">
               <IdHeadline id={invoice.id}></IdHeadline>
               <p className="mb-8">{invoice.description}</p>
               <p>{invoice.senderAddress.street}</p>
@@ -50,18 +50,18 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
                   <p>{invoice.clientAddress.country}</p>
                 </div>
               </div>
-              <div className="bg-tableColor px-6 pt-6 rounded-tl-lg rounded-tr-lg">
+              <div className="bg-tableColor dark:bg-headerBackground px-6 pt-6 rounded-tl-lg rounded-tr-lg">
                 {invoice.items.length > 0 && (invoice.items.map(item => (
                   <div className="flex items-center justify-between mb-6" key={item.name}>
                     <div>
-                      <SubtitleBold subtitle={formatDate(item.name)} />
-                      <p className="font-bold text-base text-secondary">{item.quantity} x {formatPrice(item.price)}</p>
+                      <SubtitleBold subtitle={item.name} />
+                      <p className="font-bold text-base text-secondary dark:text-secondaryDark">{item.quantity} x {formatPrice(item.price)}</p>
                     </div>
                     <SubtitleBold subtitle={formatPrice(item.total)} />
                   </div>
                 )))}
               </div>
-              <div className="flex items-center justify-between bg-draftColor text-text px-6 py-6 rounded-bl-lg rounded-br-lg">
+              <div className="flex items-center justify-between bg-draftColor dark:bg-headerText text-text px-6 py-6 rounded-bl-lg rounded-br-lg">
                 <div>Grand Total</div>
                 <div className="font-bold text-2xl">{formatPrice(invoice.total)}</div>
               </div>

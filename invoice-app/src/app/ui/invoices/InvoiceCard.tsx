@@ -14,10 +14,10 @@ export default function InvoiceCard({ id, clientName, paymentDue, total, status 
           <span className="text-secondary">#</span>
           {id}
         </p>
-        <p className="text-secondary pt-6 md:pt-0">Due {formatDate(paymentDue)}</p>
+        <p className="text-secondary dark:text-secondaryPale pt-6 md:pt-0">Due {formatDate(paymentDue)}</p>
       </div>
-      <div className="text-secondary justify-self-end md:justify-self-auto">{clientName}</div>
-      <p className="font-bold text-base pt-2">{formatPrice(total)}</p>
+      <div className="text-secondary dark:text-text justify-self-end md:justify-self-auto">{clientName}</div>
+      <p className="font-bold text-base dark:text-text pt-2">{formatPrice(total)}</p>
       <InvoiceStatus status={status} />
     </Link>)
 }

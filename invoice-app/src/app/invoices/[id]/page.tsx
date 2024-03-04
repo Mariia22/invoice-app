@@ -39,11 +39,11 @@ export default function InvoicePage({ params }: { params: { id: string } }) {
                   <Subtitle subtitle="Payment Due" />
                   <SubtitleBold subtitle={formatDate(invoice.paymentDue)} />
                   <Subtitle subtitle="Sent to" />
-                  <SubtitleBold subtitle={formatDate(invoice.clientEmail)} />
+                  <SubtitleBold subtitle={invoice.clientEmail} />
                 </div>
                 <div className="flex flex-col">
                   <Subtitle subtitle="Bill To" />
-                  <SubtitleBold subtitle={formatDate(invoice.clientName)} />
+                  <SubtitleBold subtitle={invoice.clientName} />
                   <p className="mt-2">{invoice.clientAddress.street}</p>
                   <p>{invoice.clientAddress.city}</p>
                   <p>{invoice.clientAddress.postCode}</p>

@@ -1,10 +1,10 @@
-import { invoiceData } from './../ui/invoices/Form/formData';
 import { Dispatch, SetStateAction} from "react";
 
 export type Invoice = {
   id: string;
   createdAt: string;
   paymentDue: string;
+  paymentTerms: number;
   clientName: string;
   description:string;
   total: number;
@@ -47,8 +47,8 @@ export type FormInput = {
   clientPostCode: string
   clientCountry: string
   invoiceData: string
-  paymentTerms: string
-  projectDescription: string
+  paymentTerms: number
+  description: string
   items: Item[]
 }
 

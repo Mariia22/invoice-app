@@ -1,9 +1,11 @@
+import { formatDate } from '@/app/lib/functions';
 import { FormField, Invoice } from "@/app/lib/types";
 
 export const newInvoice = {
   id: "",
-  createdAt: "",
+  createdAt: Date(),
   paymentDue: "",
+  paymentTerms: 0,
   clientName: "",
   description: "",
   total: 0,
@@ -36,9 +38,9 @@ export const defaultFormValues = (invoice:Invoice) => {
   clientCity: invoice.clientAddress.city,
   clientPostCode: invoice.clientAddress.postCode,
   clientCountry: invoice.clientAddress.country,
-  invoiceData: invoice.createdAt,
-  paymentTerms: invoice.paymentDue,
-  projectDescription: invoice.description,
+  invoiceData: formatDate(invoice.createdAt),
+  paymentTerms: invoice.paymentTerms,
+  description: invoice.description,
   items: invoice.items
   }
 }
@@ -129,29 +131,20 @@ export const billFromData:FormField[]= [
     }
   ]
 
-  export const invoiceData:FormField[]= [
+  export const paymentTermsOptions = [
     {
       id: 1,
-      name: "invoiceData",
-      label: "Invoice Date",
-      type: "text",
-      required: true,
-      gridCols: 2,
+      value: 1,
+      label: "Net 1 Day"
     },
     {
       id: 2,
-      name: "paymentTerms",
-      label: "Payment Terms",
-      type: "text",
-      required: true,
-      gridCols: 1,
+      value: 7,
+      label: "Net 7 Days"
     },
     {
       id: 3,
-      name: "projectDescription",
-      label: "Project Description",
-      type: "text",
-      required: true,
-      gridCols: 1,
-    }
+      value: 30,
+      label: "Net 30 Days"
+    },
   ]

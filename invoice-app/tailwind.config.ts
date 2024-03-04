@@ -26,7 +26,8 @@ const config: Config = {
       tableColor: "#F9FAFE",
       contrast: "#EC5757",
       contrastPale: "#FF9797",
-      black: "#000000"
+      black: "#000000",
+      blackShadow: "rgba(0, 0, 0, 0.1)"
     },
     extend: {
       boxShadow: {

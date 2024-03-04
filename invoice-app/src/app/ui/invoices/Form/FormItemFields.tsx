@@ -29,7 +29,7 @@ export default function FormItemFields({ fields, register, errors, remove, setVa
               </div>
               <div className="text-left flex flex-col gap-4 w-full col-span-2">
                 <label className="field-label">Total</label>
-                <input {...register(`items.${index}.total`, { min: 0.01 })} type="number" min="0.01" step="0.01" disabled className=" text-headerText text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-4" />
+                <input {...register(`items.${index}.total`, { min: 0.01 })} type="number" min="0.01" step="0.01" disabled className="text-headerText dark:disabled:text-secondaryDark dark:disabled:bg-black text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-4" />
               </div>
               <button type="button" className="w-[43px] h-4 col-span-1 bg-delete-button mb-4" onClick={() => remove(index)} />
             </div>

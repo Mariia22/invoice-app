@@ -12,7 +12,7 @@ export default function ButtonCancel({ name }: { name: string }) {
 
   return (
     <Button
-      style="bg-tableColor text-secondary"
+      style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale"
       onClick={cancel}
       text={name} />
   )

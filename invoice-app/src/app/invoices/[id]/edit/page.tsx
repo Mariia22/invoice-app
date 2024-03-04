@@ -9,8 +9,8 @@ export default function EditPage({ params }: { params: Invoice }) {
     <>
       <div className="mt-8 mx-6">
         <ButtonBack />
-        <div className="mt-6 text-2xl font-bold text-headerText">Edit <IdHeadline id={params.id} /></div>
+        <div className="mt-6 text-2xl font-bold text-headerText dark:text-text">Edit <IdHeadline id={params.id} /></div>
       </div>
-      <FormInvoice isEditing={true}/>
+      <FormInvoice isEditing={true} />
     </>)
 }

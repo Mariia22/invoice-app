@@ -20,7 +20,6 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)
-  console.log(defaultFormValues(invoice))
 
   function addNewItem() {
     append({ name: "", quantity: 0, price: 0, total: 0 })
@@ -40,9 +39,9 @@ export default function FormInvoice({ isEditing }: { isEditing: boolean }) {
       <FormSection marginTop={16}>
         <h3 className="font-bold text-lg text-secondaryDark">Item List</h3>
         <FormItemFields fields={fields} getValues={getValues} register={register} errors={errors} remove={remove} setValue={setValue} />
-        <button type="button" className="text-base bg-tableColor text-secondary w-[327px] h-[48px] rounded-lg mt-12 mb-[88px] place-self-center col-span-6" onClick={addNewItem}>+ Add New Item</button>
+        <button type="button" className="text-base bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryDark w-[327px] h-[48px] rounded-3xl mt-12 mb-[88px] place-self-center col-span-6" onClick={addNewItem}>+ Add New Item</button>
       </FormSection >
-      <div className="w-full h-[64px] bg-gradient-to-t from-blackShadow to-text" />
+      <div className="w-full h-[64px] bg-gradient-to-t from-blackShadow dark:bg-none to-text" />
       <Footer>
         {isEditing
           ? <>

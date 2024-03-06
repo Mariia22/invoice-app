@@ -15,10 +15,12 @@ datasource db {
 }
 
 model Client {
-  id          Int       @id @default(autoincrement())
-  clientName  String
-  clientEmail String    @unique
-  Invoice     Invoice[]
+  id            Int       @id @default(autoincrement())
+  clientName    String
+  clientEmail   String
+  clientAddress Address   @relation(fields: [addressId], references: [id])
+  Invoice       Invoice[]
+  addressId     Int
 }
 
 model Item {
@@ -32,13 +34,13 @@ model Item {
 }
 
 model Address {
-  id            Int       @id @default(autoincrement())
-  street        String
-  city          String
-  postcode      String
-  country       String
-  senderAddress Invoice[] @relation("senderAddress")
-  clientAddress Invoice[] @relation("clientAddress")
+  id       Int       @id @default(autoincrement())
+  street   String
+  city     String
+  postcode String
+  country  String
+  Client   Client[]
+  Invoice  Invoice[]
 }
 
 enum Status {
@@ -56,9 +58,8 @@ model Invoice {
   status        Status
   client        Client   @relation(fields: [clientId], references: [id])
   clientId      Int
-  senderAddress Address  @relation(name: "senderAddress", fields: [addressId], references: [id], map: "senderAddress")
-  clientAddress Address  @relation("clientAddress", fields: [addressId], references: [id], map: "clientAddress")
   item          Item[]
   total         Float
+  senderAddress Address  @relation(fields: [addressId], references: [id])
   addressId     Int
 }

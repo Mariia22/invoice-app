@@ -5,45 +5,42 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.invoice.create({
     data: {
-      id: "RT3080",
-      createdAt: new Date("2021-08-18"),
-      paymentDue: new Date("2021-08-19"),
-      description: "Re-branding",
-      paymentTerms: 1,
+      id: "FV2353",
+      createdAt: new Date("2021-11-05"),
+      paymentDue: new Date("2021-11-12"),
+      description: "Logo Re-design",
+      paymentTerms: 7,
       client: {
         create: {
-          clientName: "Jensen Huang",
-          clientEmail: "jensenh@mail.com"
+          clientName: "Anita Wainwright",
+          clientEmail: "",
+          clientAddress: {
+            create: {
+              street: "",
+              city: "",
+              postcode: "",
+              country: ""
+            }
+          }
         }
       },
-      status: "Paid",
+      status: "Draft",
       senderAddress: {
-        create: {
-          street: "19 Union Terrace",
-          city: "London",
-          postcode: "E1 3EZ",
-          country: "United Kingdom"
-        }
-      },
-      clientAddress: {
-        create: {
-          street: "106 Kendell Street",
-          city: "Sharrington",
-          postcode: "NR24 5WQ",
-          country: "United Kingdom"
+        connect: {
+          id: 1
         }
       },
       item: {
         create: [
           {
-            name: "Brand Guidelines",
+            name: "Logo Re-design",
             quantity: 1,
-            price: 1800.9,
-            total: 1800.9
+            price: 3102.04,
+            total: 3102.04
           }
         ]
       },
-      total: 1800.9
+      total: 3102.04
     }
   });
 }

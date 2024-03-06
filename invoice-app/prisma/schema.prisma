@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Client {
+  id          Int       @id @default(autoincrement())
+  clientName  String
+  clientEmail String    @unique
+  Invoice     Invoice[]
+}
+
+model Item {
+  id        Int      @id @default(autoincrement())
+  name      String
+  quantity  Int
+  price     Float
+  total     Float
+  Invoice   Invoice? @relation(fields: [invoiceId], references: [id])
+  invoiceId String?
+}
+
+model Address {
+  id            Int       @id @default(autoincrement())
+  street        String
+  city          String
+  postcode      String
+  country       String
+  senderAddress Invoice[] @relation("senderAddress")
+  clientAddress Invoice[] @relation("clientAddress")
+}
+
+enum Status {
+  Paid
+  Pending
+  Draft
+}
+
+model Invoice {
+  id            String   @id
+  createdAt     DateTime @default(now())
+  paymentDue    DateTime
+  description   String
+  paymentTerms  Int
+  status        Status
+  client        Client   @relation(fields: [clientId], references: [id])
+  clientId      Int
+  senderAddress Address  @relation(name: "senderAddress", fields: [addressId], references: [id], map: "senderAddress")
+  clientAddress Address  @relation("clientAddress", fields: [addressId], references: [id], map: "clientAddress")
+  item          Item[]
+  total         Float
+  addressId     Int
+}

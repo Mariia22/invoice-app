@@ -9,7 +9,6 @@ export const newInvoice = {
   clientName: "",
   description: "",
   total: 0,
-  status: "",
   clientEmail: "",
   senderAddress: {
     street: "",
@@ -30,18 +29,18 @@ export const defaultFormValues = (invoice:Invoice) => {
   return {
   senderStreetAddress: invoice.senderAddress.street,
   senderCity: invoice.senderAddress.city,
-  senderPostCode: invoice.senderAddress.postCode,
+  senderPostCode: invoice.senderAddress.postcode,
   senderCountry: invoice.senderAddress.country,
-  clientName: invoice.clientName,
-  clientEmail: invoice.clientEmail,
-  clientStreetAddress: invoice.clientAddress.street,
-  clientCity: invoice.clientAddress.city,
-  clientPostCode: invoice.clientAddress.postCode,
-  clientCountry: invoice.clientAddress.country,
+  clientName: invoice.client.clientName,
+  clientEmail: invoice.client.clientEmail,
+  clientStreetAddress: invoice.client.clientAddress.street,
+  clientCity: invoice.client.clientAddress.city,
+  clientPostCode: invoice.client.clientAddress.postcode,
+  clientCountry: invoice.client.clientAddress.country,
   invoiceData: formatDate(invoice.createdAt),
   paymentTerms: invoice.paymentTerms,
   description: invoice.description,
-  items: invoice.items
+  items: invoice.item
   }
 }
 

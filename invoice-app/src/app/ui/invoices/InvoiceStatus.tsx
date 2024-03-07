@@ -1,14 +1,15 @@
 "use client";
+import { Status } from "@/app/lib/types";
 import { useTheme } from "next-themes";
 
-export default function InvoiceStatus({ status }: { status: string }) {
+export default function InvoiceStatus({ status }: { status: Status }) {
   const { resolvedTheme } = useTheme();
   let color, bgColor
 
-  if (status === "paid") {
+  if (status === Status.Paid) {
     bgColor = "bg-paidColor"
     color = "text-paidColor"
-  } else if (status === "pending") {
+  } else if (status === Status.Pending) {
     bgColor = "bg-pendingColor"
     color = "text-pendingColor"
   } else {

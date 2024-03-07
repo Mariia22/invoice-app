@@ -1,10 +1,11 @@
-import { Invoice } from "@/app/lib/types";
+import { Client, Invoice, Status } from "@/app/lib/types";
 import InvoiceStatus from "./InvoiceStatus";
 import { formatDate, formatPrice } from "@/app/lib/functions";
 import Link from "next/link";
 
 
-export default function InvoiceCard({ id, clientName, paymentDue, total, status }: Invoice) {
+export default function InvoiceCard({ id, clientName, paymentDue, total, status }: { id: string, clientName: string, paymentDue: Date, total: number, status: Status }) {
+  console.log(id, clientName, paymentDue, total, status)
   return (
     <Link
       href={`/invoices/${id}`}

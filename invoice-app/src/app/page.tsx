@@ -1,14 +1,21 @@
 import ButtonAdd from "./ui/invoices/Buttons/ButtonAdd";
 import InvoiceCard from "./ui/invoices/InvoiceCard";
-import data from "./data.json"
 import EmptyPage from "./ui/invoices/EmptyPage";
+import { getAllInvoices } from "./lib/data";
+import { Status } from "./lib/types";
 
-export default function Invoices() {
+export default async function Invoices() {
   let numberOfInvoices;
-  if (data.length === 0) {
-    numberOfInvoices = "No"
+  const data = await getAllInvoices();
+
+  if (data) {
+    if (data.length === 0) {
+      numberOfInvoices = "No"
+    } else {
+      numberOfInvoices = data.length
+    }
   } else {
-    numberOfInvoices = data.length
+    return (<div>Failed to fetch invoices</div>)
   }
 
   return (
@@ -25,7 +32,7 @@ export default function Invoices() {
       </div>
       <div>
         {data.length === 0 && <EmptyPage />}
-        {data.length > 0 && data.map(invoice => (<InvoiceCard key={invoice.id} {...invoice} />))}
+        {data.length > 0 && data.map(invoice => (<InvoiceCard key={invoice.id} id={invoice.id} clientName={invoice.client.clientName} paymentDue={invoice.paymentDue} total={invoice.total} status={Status[invoice.status]} />))}
       </div>
     </div>
   );

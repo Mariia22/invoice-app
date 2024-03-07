@@ -2,24 +2,37 @@ import { Dispatch, SetStateAction} from "react";
 
 export type Invoice = {
   id: string;
-  createdAt: string;
-  paymentDue: string;
+  createdAt: Date;
+  paymentDue: Date;
   paymentTerms: number;
-  clientName: string;
+  clientId: number;
+  client: Client;
   description:string;
   total: number;
   status: string;
-  clientEmail: string;
+  addressId: number;
   senderAddress: Address;
-  clientAddress: Address;
-  items: Item[];
+  item: Item[];
 };
 
+export type Client = {
+  id: number;
+  addressId: number;
+  clientName: string;
+  clientEmail: string; 
+  clientAddress: Address;
+}
+
+export enum Status  {
+  Paid = 'Paid',
+  Pending = 'Pending',
+  Draft = 'Draft'
+} 
 
 export type Address = {
   street: string;
   city: string;
-  postCode: string;
+  postcode: string;
   country: string;
 }
 

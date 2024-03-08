@@ -164,6 +164,11 @@ export const billFromData:FormField[]= [
     },
     {
       id: 3,
+      value: 14,
+      label: "Net 14 Days"
+    },
+    {
+      id: 4,
       value: 30,
       label: "Net 30 Days"
     },

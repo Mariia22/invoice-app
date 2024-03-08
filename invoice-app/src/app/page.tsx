@@ -3,6 +3,8 @@ import InvoiceCard from "./ui/invoices/InvoiceCard";
 import EmptyPage from "./ui/invoices/EmptyPage";
 import { getAllInvoices } from "./lib/data";
 import { Status } from "./lib/types";
+import Image from "next/image";
+import InvoiceFilter from "./ui/invoices/InvoiceFilter";
 
 export default async function Invoices() {
   let numberOfInvoices;
@@ -25,8 +27,8 @@ export default async function Invoices() {
           <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>
           <p className="text-secondaryDark">{numberOfInvoices} invoices</p>
         </div>
-        <div className="flex items-center">
-          <div className="w-[53px] h-[15px]">Filter</div>
+        <div className="flex items-center gap-4 md:gap-10">
+          <InvoiceFilter />
           <ButtonAdd />
         </div>
       </div>

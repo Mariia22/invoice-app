@@ -5,7 +5,6 @@ import Link from "next/link";
 
 
 export default function InvoiceCard({ id, clientName, paymentDue, total, status }: { id: string, clientName: string, paymentDue: Date, total: number, status: Status }) {
-  console.log(id, clientName, paymentDue, total, status)
   return (
     <Link
       href={`/invoices/${id}`}

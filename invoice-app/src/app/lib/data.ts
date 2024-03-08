@@ -1,5 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "../../../prisma/client";
+import { Invoice } from "@prisma/client";
+import { Status } from "./types";
 
 export async function getAllInvoices () {
   noStore ();

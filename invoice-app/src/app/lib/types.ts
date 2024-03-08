@@ -23,8 +23,8 @@ export type Client = {
   clientAddress: Address;
 }
 
-export enum Status  {
-  Paid = 'Paid',
+export enum  Status  {
+  Paid ='Paid',
   Pending = 'Pending',
   Draft = 'Draft'
 } 
@@ -81,3 +81,9 @@ type DeepKeys<T> = T extends object
         : never;
     }[keyof T]
   : never;
+
+  export type FilterCheckbox = {
+    draft:boolean;
+    pending: boolean;
+    paid: boolean
+  }

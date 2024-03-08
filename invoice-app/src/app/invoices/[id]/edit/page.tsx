@@ -1,10 +1,11 @@
 import { getInvoiceById } from "@/app/lib/data";
+import { Invoice } from "@/app/lib/types";
 import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
 import FormInvoice from "@/app/ui/invoices/Form/FormInvoice";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
 
 export default async function EditPage({ params }: { params: { id: string } }) {
-  const invoice = await getInvoiceById(params.id)
+  const invoice: Invoice | undefined | null = await getInvoiceById(params.id)
 
   if (!invoice) {
     return (<div>Invoice is not found</div>)

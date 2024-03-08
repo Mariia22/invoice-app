@@ -6,8 +6,8 @@ type CheckboxProps = {
 
 export default function Checkbox({ value, label, onChange }: CheckboxProps) {
   return (
-    <label>
-      <input type="checkbox" checked={value} onChange={onChange} />
+    <label className="font-bold cursor-pointer">
+      <input type="checkbox" checked={value} onChange={onChange} className="accent-primary focus:outline-none focus:border-2 focus:border-primary" />
       {label}
     </label>
   );

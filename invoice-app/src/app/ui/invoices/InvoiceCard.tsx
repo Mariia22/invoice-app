@@ -4,7 +4,7 @@ import { formatDate, formatPrice } from "@/app/lib/functions";
 import Link from "next/link";
 
 
-export default function InvoiceCard({ id, clientName, paymentDue, total, status }: { id: string, clientName: string, paymentDue: Date, total: number, status: Status }) {
+export default function InvoiceCard({ id, clientName, paymentDue, total, status }: { id: string, clientName: string, paymentDue: Date, total: number, status: string }) {
   return (
     <Link
       href={`/invoices/${id}`}

@@ -9,6 +9,9 @@
   .field-label {
     @apply text-secondary dark:text-secondaryDark text-sm leading-4 mt-4 mb-2
   }
+  label input {
+    margin-right: 1rem;
+ }
 }
 
 @layer utilities {

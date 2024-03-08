@@ -2,7 +2,7 @@
 import { Status } from "@/app/lib/types";
 import { useTheme } from "next-themes";
 
-export default function InvoiceStatus({ status }: { status: Status }) {
+export default function InvoiceStatus({ status }: { status: string }) {
   const { resolvedTheme } = useTheme();
   let color, bgColor
 

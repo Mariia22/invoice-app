@@ -2,7 +2,7 @@
 
 import { FormInput, Invoice } from "@/app/lib/types"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
-import { billFromData, billToData, defaultFormValues, newInvoice } from "./formData"
+import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
 import Footer from "../../shared/Footer"
@@ -13,8 +13,12 @@ import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
 
-export default function FormInvoice({ isEditing, invoice }: { isEditing: boolean, invoice: Invoice }) {
-  // remove after Redux will be added
+type FormInvoice = {
+  isEditing: boolean;
+  invoice?: Invoice
+}
+
+export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
   const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)

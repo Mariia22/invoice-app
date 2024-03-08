@@ -6,42 +6,63 @@ export const newInvoice = {
   createdAt: Date(),
   paymentDue: "",
   paymentTerms: 0,
-  clientName: "",
+  client: {
+    clientName: "",
+    clientEmail: "",
+    clientAddress: {
+      street: "",
+      city: "",
+      postCode: "",
+      country: "",
+    },
+  },
   description: "",
   total: 0,
-  clientEmail: "",
   senderAddress: {
     street: "",
     city: "",
     postCode: "",
     country: "",
   },
-  clientAddress: {
-    street: "",
-    city: "",
-    postCode: "",
-    country: "",
-  },
-  items: []
+  item: []
 }
 
-export const defaultFormValues = (invoice:Invoice) => {
+export const defaultFormValues = (invoice:Invoice | undefined) => {
+  if (invoice) {
+    return {
+      senderStreetAddress: invoice.senderAddress.street,
+      senderCity: invoice.senderAddress.city,
+      senderPostCode: invoice.senderAddress.postcode,
+      senderCountry: invoice.senderAddress.country,
+      clientName: invoice.client.clientName,
+      clientEmail: invoice.client.clientEmail,
+      clientStreetAddress: invoice.client.clientAddress.street,
+      clientCity: invoice.client.clientAddress.city,
+      clientPostCode: invoice.client.clientAddress.postcode,
+      clientCountry: invoice.client.clientAddress.country,
+      invoiceData: formatDate(invoice.createdAt),
+      paymentTerms: invoice.paymentTerms,
+      description: invoice.description,
+      items: invoice.item
+      }
+  } else {
   return {
-  senderStreetAddress: invoice.senderAddress.street,
-  senderCity: invoice.senderAddress.city,
-  senderPostCode: invoice.senderAddress.postcode,
-  senderCountry: invoice.senderAddress.country,
-  clientName: invoice.client.clientName,
-  clientEmail: invoice.client.clientEmail,
-  clientStreetAddress: invoice.client.clientAddress.street,
-  clientCity: invoice.client.clientAddress.city,
-  clientPostCode: invoice.client.clientAddress.postcode,
-  clientCountry: invoice.client.clientAddress.country,
-  invoiceData: formatDate(invoice.createdAt),
-  paymentTerms: invoice.paymentTerms,
-  description: invoice.description,
-  items: invoice.item
+  senderStreetAddress: "",
+  senderCity:"",
+  senderPostCode: "",
+  senderCountry:"",
+  clientName: "",
+  clientEmail: "",
+  clientStreetAddress: "",
+  clientCity: "",
+  clientPostCode: "",
+  clientCountry: "",
+  invoiceData: "",
+  paymentTerms: 1,
+  description: "",
+  items: []
   }
+}
 }
 
 export const billFromData:FormField[]= [

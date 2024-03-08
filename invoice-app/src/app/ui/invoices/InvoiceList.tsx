@@ -1,5 +1,5 @@
 "use client";
-import { FilterCheckbox, Invoice, Status } from "@/app/lib/types";
+import { FilterCheckbox, Invoice } from "@/app/lib/types";
 import { useState } from "react";
 import InvoiceCard from "./InvoiceCard";
 import EmptyPage from "./EmptyPage";
@@ -15,10 +15,12 @@ export default function InvoiceList({ data }: InvoiceListProps) {
 
   async function filterData(state: FilterCheckbox) {
     const filters = Object.entries(state).filter(item => item[1]).map(item => item[0].charAt(0).toUpperCase() + item[0].slice(1))
+    const dataCopy: Invoice[] | undefined = data && [...data]
     if (filters.length > 0) {
-      const dataCopy: Invoice[] | undefined = data && [...data]
       const filteredInvoices = dataCopy && dataCopy.filter(item => filters.indexOf(item.status) > -1)
-      setInvoices(filteredInvoices as Invoice[])
+      setInvoices(filteredInvoices)
+    } else {
+      setInvoices(dataCopy)
     }
   }
 

@@ -1,26 +1,17 @@
 import { Dispatch, SetStateAction} from "react";
+import { Prisma, PrismaClient } from "@prisma/client";
 
-export type Invoice = {
-  id: string;
-  createdAt: Date;
-  paymentDue: Date;
-  paymentTerms: number;
-  clientId: number;
-  client: Client;
-  description:string;
-  total: number;
-  status: string;
-  addressId: number;
-  senderAddress: Address;
-  item: Item[];
-};
+const invoiceWithClients = Prisma.validator<Prisma.InvoiceDefaultArgs>()({
+  include: { client: true },
+})
+export type Invoice = Prisma.InvoiceGetPayload<typeof invoiceWithClients>
 
-export type Client = {
-  id: number;
-  addressId: number;
-  clientName: string;
-  clientEmail: string; 
-  clientAddress: Address;
+export type Client =  {
+id: number;
+addressId: number;
+clientName: string;
+clientEmail: string; 
+clientAddress: Address;
 }
 
 export enum  Status  {

@@ -3,7 +3,7 @@ import prisma from "../../../prisma/client";
 import { Invoice } from "@prisma/client";
 import { Status } from "./types";
 
-export async function getAllInvoices () {
+export async function getAllInvoices (){
   noStore ();
   try {
     const data = await prisma?.invoice.findMany({
@@ -47,3 +47,19 @@ export async function getInvoiceById (id:string) {
     console.error('Database Error:', error)
   }
 }
+ export async function fetchFilteredInvoices(chosenStatus:Array<Status>): Promise<Invoice[] | undefined>{
+  noStore ();
+  const search = chosenStatus.map(status => Status[status])
+  console.log(search)
+  try {
+    const data = await prisma?.invoice.findMany({
+      where:{
+        status:{in:[...search]}
+      }
+    });
+    return data
+
+  } catch (error){
+    console.error('Database Error:', error)
+  }
+ }

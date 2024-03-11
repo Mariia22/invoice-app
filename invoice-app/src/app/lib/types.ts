@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction} from "react";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma} from "@prisma/client";
 
 const invoiceWithClients = Prisma.validator<Prisma.InvoiceDefaultArgs>()({
   include: { client: true },

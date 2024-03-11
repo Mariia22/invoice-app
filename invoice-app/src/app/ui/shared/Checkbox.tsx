@@ -1,17 +1,16 @@
 import { ChangeEvent } from "react";
 
 type CheckboxProps = {
-  id: string
-  defaultValue: boolean | undefined;
-  label: string;
+  checked: boolean
+  name: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function Checkbox({ id, defaultValue, label, onChange }: CheckboxProps) {
+export default function Checkbox({ checked, name, onChange }: CheckboxProps) {
   return (
     <label className="font-bold cursor-pointer">
-      <input type="checkbox" id={id} checked={defaultValue} onChange={onChange} className="accent-primary focus:outline-none focus:border-2 focus:border-primary" />
-      {label}
+      <input type="checkbox" name={name} checked={checked} onChange={onChange} className="accent-primary focus:outline-none focus:border-2 focus:border-primary" />
+      {name}
     </label>
   );
 }

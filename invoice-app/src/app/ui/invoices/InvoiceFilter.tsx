@@ -55,8 +55,8 @@ export default function InvoiceFilter({ statuses }: { statuses: string[] }) {
         <Image width={11} height={7} src="/assets/icon-arrow-down.svg" alt="Filter Button" className={`${arrow}`} />
       </div>
       {isFilterOpened &&
-        (<div data-pending={isPending ? "" : undefined} className="absolute top-10 -left-5 flex flex-col gap-2 w-[192px] h-[128px] bg-text shadow-modal rounded-lg px-6 py-6" onMouseEnter={openFilterModal} onMouseLeave={closeFilterModal} onTouchStart={openFilterModal} onTouchEnd={closeFilterModal}>
-          {STATUS.map(status => (<Checkbox key={status} name={status} checked={optimisticStatus.includes(status)} onChange={(e) => handleCheck(e)} />))}
+        (<div data-pending={isPending ? "" : undefined} className="absolute top-10 -left-5 flex flex-col gap-2 w-[192px] h-[128px] bg-text dark:bg-headerBackground shadow-modal rounded-lg px-6 py-6" onMouseEnter={openFilterModal} onMouseLeave={closeFilterModal} onTouchStart={openFilterModal} onTouchEnd={closeFilterModal}>
+          {STATUS.map(status => (<Checkbox key={status} id={status} name={status} checked={optimisticStatus.includes(status)} onChange={(e) => handleCheck(e)} />))}
         </div>
         )}
     </div>

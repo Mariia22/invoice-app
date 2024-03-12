@@ -25,8 +25,15 @@ export default async function InvoicePage({ params }: { params: { id: string } }
         <ButtonBack />
         <>
           <div className="flex items-center justify-between w-full px-6 py-6 mt-8 mb-4 bg-text dark:bg-cardColor rounded-md shadow-modal">
-            <p>Status</p>
-            <InvoiceStatus status={Status[invoice.status]} />
+            <div className="flex items-center justify-between w-full md:justify-start md:w-fit md:gap-5">
+              <p>Status</p>
+              <InvoiceStatus status={Status[invoice.status]} withArrow={false} />
+            </div>
+            <div className="hidden md:flex md:h-12">
+              <ButtonEdit id={params.id} />
+              <ButtonDelete />
+              <ButtonPaid id={params.id} />
+            </div>
           </div>
           <div className="flex flex-col justify-between w-full px-6 py-6 mb-14 bg-text dark:bg-cardColor text-sm text-secondary dark:text-secondaryPale rounded-md shadow-modal">
             <IdHeadline id={invoice.id}></IdHeadline>
@@ -65,7 +72,8 @@ export default async function InvoicePage({ params }: { params: { id: string } }
               )))}
             </div>
             <div className="flex items-center justify-between bg-draftColor dark:bg-headerText text-text px-6 py-6 rounded-bl-lg rounded-br-lg">
-              <div>Grand Total</div>
+              <div className="md:hidden">Grand Total</div>
+              <div className="hidden md:inline">Amount Due</div>
               <div className="font-bold text-2xl">{formatPrice(invoice.total)}</div>
             </div>
 

@@ -16,6 +16,6 @@ export default function InvoiceCard({ id, clientName, paymentDue, total, status 
       </div>
       <div className="text-secondary dark:text-text justify-self-end md:justify-self-center md:text-sm md:col-span-2 md:self-center">{clientName}</div>
       <p className="font-bold text-base dark:text-text pt-2 md:pt-0 md:self-center">{formatPrice(total)}</p>
-      <InvoiceStatus status={status} />
+      <InvoiceStatus status={status} withArrow />
     </Link>)
 }

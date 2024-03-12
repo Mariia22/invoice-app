@@ -7,22 +7,21 @@ import EmptyPage from "./ui/invoices/EmptyPage";
 import InvoiceCard from "./ui/invoices/InvoiceCard";
 import { Suspense } from "react";
 
-export default async function Invoices({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Invoices({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   let statuses = Array.isArray(searchParams.status)
     ? searchParams.status
     : searchParams.status
       ? [searchParams.status]
       : [];
   let data: Invoice[] | undefined = [];
+  let numberOfInvoices: number;
 
   if (statuses.length === 0) {
     data = await getAllInvoices();
+    numberOfInvoices = data?.length || 0;
   } else {
     data = await getFilteredInvoices(statuses)
+    numberOfInvoices = data?.length || 0;
   }
 
 
@@ -31,7 +30,8 @@ export default async function Invoices({
       <div className="flex items-center justify-between pb-8">
         <div>
           <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>
-          <p className="text-secondaryDark">{data && data.length > 0 ? data.length : "No"} invoices</p>
+          <p className="text-secondaryDark md:hidden">{numberOfInvoices > 0 ? numberOfInvoices : "No"} invoices</p>
+          <p className="hidden text-secondaryDark md:inline-block">{numberOfInvoices > 0 ? `There are ${numberOfInvoices} total` : "No"} invoices</p>
         </div>
         <div className="flex items-center gap-4 md:gap-10 group">
           <InvoiceFilter statuses={statuses} />

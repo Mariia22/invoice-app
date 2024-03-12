@@ -1,9 +1,6 @@
-import { Client, Invoice, Status } from "@/app/lib/types";
 import InvoiceStatus from "./InvoiceStatus";
 import { formatDate, formatPrice } from "@/app/lib/functions";
 import Link from "next/link";
-import Image from "next/image";
-
 
 export default function InvoiceCard({ id, clientName, paymentDue, total, status }: { id: string, clientName: string, paymentDue: Date, total: number, status: string }) {
   return (

@@ -21,7 +21,7 @@ export default function RootLayout({
       <head>
         <link rel="shortcut icon" href="/assets/favicon.png" />
       </head>
-      <body className="flex flex-col font-medium w-screentext-[13px] xl:flex-row 2xl:justify-center">
+      <body className="flex flex-col font-medium w-screentext-[13px] h-dvh bg-background dark:bg-darkText xl:flex-row 2xl:justify-center">
         <Providers>
           <Header />
           <main>

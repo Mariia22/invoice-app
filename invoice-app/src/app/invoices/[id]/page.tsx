@@ -6,11 +6,15 @@ import ButtonEdit from "@/app/ui/invoices/Buttons/ButtonEdit";
 import ButtonDelete from "@/app/ui/invoices/Buttons/ButtonDelete";
 import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
-import PortalDeleteInvoice from "@/app/ui/invoices/Modal/PortalDeleteInvoice";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
 import Footer from "@/app/ui/shared/Footer";
 import { getInvoiceById } from "@/app/lib/data";
 import { Status } from "@/app/lib/types";
+import ModalDeleteInvoice from "@/app/ui/invoices/Modal/ModalDeleteInvoice";
+import PortalWrapper from "@/app/ui/invoices/Modal/PortalWrapper";
+import ButtonEditModalWindow from "@/app/ui/invoices/Buttons/ButtonEditModalWindow";
+import ModalEditInvoice from "@/app/ui/invoices/Modal/ModalEditInvoice";
+import PortalFormWrapper from "@/app/ui/invoices/Modal/PortalFormWrapper";
 
 export default async function InvoicePage({ params }: { params: { id: string } }) {
   const invoice = await getInvoiceById(params.id)
@@ -30,7 +34,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
               <InvoiceStatus status={Status[invoice.status]} withArrow={false} />
             </div>
             <div className="hidden md:flex md:h-12">
-              <ButtonEdit id={params.id} />
+              <ButtonEditModalWindow />
               <ButtonDelete />
               <ButtonPaid id={params.id} />
             </div>
@@ -97,7 +101,12 @@ export default async function InvoicePage({ params }: { params: { id: string } }
         <ButtonDelete />
         <ButtonPaid id={params.id} />
       </Footer>
-      <PortalDeleteInvoice id={params.id} />
+      <PortalWrapper>
+        <ModalDeleteInvoice id={params.id} />
+      </PortalWrapper>
+      <PortalFormWrapper>
+        <ModalEditInvoice id={params.id} invoice={invoice} />
+      </PortalFormWrapper>
     </>
   )
 }

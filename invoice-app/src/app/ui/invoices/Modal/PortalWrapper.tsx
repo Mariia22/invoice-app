@@ -4,9 +4,8 @@ import { ModalType } from "@/app/lib/types";
 import { ModalWindow } from "@/app/providers";
 import { useContext, useEffect } from "react";
 import Portal from "../../shared/Portal";
-import ModalDeleteInvoice from "./ModalDeleteInvoice";
 
-export default function PortalDeleteInvoice({ id }: { id: string }) {
+export default function PortalWrapper({ children }: { children: React.ReactNode }) {
   const { isModalOpen } = useContext(ModalWindow) as ModalType
 
   useEffect(() => {
@@ -15,6 +14,6 @@ export default function PortalDeleteInvoice({ id }: { id: string }) {
       : document.body.style.overflow = "scroll"
   }, [isModalOpen])
 
-  return isModalOpen ? <Portal><ModalDeleteInvoice id={id} /></Portal> : null
+  return isModalOpen ? <Portal classes="fixed left-0 top-0 w-full h-full flex items-center bg-black bg-opacity-50 z-10 overflow-hidden">{children}</Portal> : null
 };
 

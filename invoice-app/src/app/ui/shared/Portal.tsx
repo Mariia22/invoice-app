@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function Portal({ children }: { children: React.ReactNode }) {
+export default function Portal({ children, classes }: { children: React.ReactNode, classes: string }) {
   const [mounted, setMounted] = useState(false)
   const element = document.getElementById("modal-root") as Element
 
@@ -13,6 +13,6 @@ export default function Portal({ children }: { children: React.ReactNode }) {
   }, [])
 
   return mounted
-    ? createPortal(<dialog className="fixed left-0 top-0 w-full h-full flex items-center bg-black bg-opacity-50 z-10 overflow-hidden">{children}</dialog>, element)
+    ? createPortal(<dialog className={classes}>{children}</dialog>, element)
     : null
 };

@@ -39,6 +39,11 @@ export type ModalType = {
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
+export type ModalFormType = {
+  isFormOpen: boolean;
+  setFormModal: Dispatch<SetStateAction<boolean>>
+}
+
 export type FormInput = {
   senderStreetAddress: string
   senderCity: string
@@ -63,6 +68,7 @@ export type FormField = {
   type: string
   required: boolean
   gridCols: number
+  gridTabletCols: number
 }
 
 type DeepKeys<T> = T extends object

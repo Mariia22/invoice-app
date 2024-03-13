@@ -73,6 +73,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 2,
+      gridTabletCols: 4
     },
     {
       id: 2,
@@ -81,6 +82,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 1,
+      gridTabletCols: 1
     },
     {
       id: 3,
@@ -89,6 +91,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 1,
+      gridTabletCols: 1
     },
     {
       id: 4,
@@ -97,6 +100,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 2,
+      gridTabletCols: 1
     }
   ]
 
@@ -108,6 +112,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 2,
+      gridTabletCols: 4
     },
     {
       id: 2,
@@ -116,6 +121,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 2,
+      gridTabletCols: 4
     },
     {
       id: 3,
@@ -124,6 +130,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 2,
+      gridTabletCols: 4
     },
     {
       id: 4,
@@ -132,6 +139,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 1,
+      gridTabletCols: 1
     },
     {
       id: 5,
@@ -140,6 +148,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 1,
+      gridTabletCols: 1
     },
     {
       id: 6,
@@ -148,6 +157,7 @@ export const billFromData:FormField[]= [
       type: "text",
       required: true,
       gridCols: 2,
+      gridTabletCols: 1
     }
   ]
 

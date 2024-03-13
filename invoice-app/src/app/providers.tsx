@@ -2,9 +2,10 @@
 
 import { ThemeProvider } from "next-themes";
 import { createContext, useState } from "react";
-import { ModalType } from "./lib/types";
+import { ModalFormType, ModalType } from "./lib/types";
 
 export const ModalWindow = createContext<ModalType | null>(null);
+export const FormWindow = createContext<ModalFormType | null>(null);
 
 export function Providers({
   children,
@@ -12,10 +13,14 @@ export function Providers({
   children: React.ReactNode;
 }) {
   const [isModalOpen, setOpenModal] = useState(false);
+  const [isFormOpen, setFormModal] = useState(false);
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <ModalWindow.Provider value={{ isModalOpen, setOpenModal }}>
-        {children}
+        <FormWindow.Provider value={{ isFormOpen, setFormModal }}>
+          {children}
+        </FormWindow.Provider>
       </ModalWindow.Provider>
     </ThemeProvider>
   )

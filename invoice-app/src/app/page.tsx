@@ -5,6 +5,9 @@ import ButtonAdd from "./ui/invoices/Buttons/ButtonAdd";
 import EmptyPage from "./ui/invoices/EmptyPage";
 import InvoiceCard from "./ui/invoices/InvoiceCard";
 import { Suspense } from "react";
+import PortalFormWrapper from "./ui/invoices/Modal/PortalFormWrapper";
+import ModalEditInvoice from "./ui/invoices/Modal/ModalEditInvoice";
+import ButtonAddModalWindow from "./ui/invoices/Buttons/ButtonAddModalWindow";
 
 export default async function Invoices({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   let statuses = Array.isArray(searchParams.status)
@@ -35,6 +38,7 @@ export default async function Invoices({ searchParams }: { searchParams: { [key:
         <div className="flex items-center gap-4 md:gap-10 group">
           <InvoiceFilter statuses={statuses} />
           <ButtonAdd />
+          <ButtonAddModalWindow />
         </div>
       </div>
       {data?.length === 0 && <EmptyPage />}
@@ -54,6 +58,9 @@ export default async function Invoices({ searchParams }: { searchParams: { [key:
           ))}
         </div>
       </Suspense>
+      <PortalFormWrapper>
+        <ModalEditInvoice />
+      </PortalFormWrapper>
     </div>
   );
 }

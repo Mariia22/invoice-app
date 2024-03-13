@@ -5,7 +5,6 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
-import Footer from "../../shared/Footer"
 import ButtonCancel from "../Buttons/ButtonCancel"
 import ButtonSaveChanges from "../Buttons/ButtonSaveChanges"
 import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
@@ -28,9 +27,9 @@ export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
   }
 
   return (
-    <form className="flex flex-col justify-start items-center w-full m-auto" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col justify-start items-center w-full m-auto bg-text dark:bg-darkText md:m-0" onSubmit={handleSubmit(onSubmit)}>
+      <FormHeader header="Bill From" />
       <FormSection marginTop={6}>
-        <FormHeader header="Bill From" />
         <FormFields data={billFromData} register={register} errors={errors} />
       </FormSection>
       <FormSection marginTop={6}>
@@ -44,7 +43,7 @@ export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
         <button type="button" className="text-base bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryDark w-[327px] h-[48px] rounded-3xl mt-12 mb-[88px] place-self-center col-span-6" onClick={addNewItem}>+ Add New Item</button>
       </FormSection >
       <div className="w-full h-[64px] bg-gradient-to-t from-blackShadow dark:bg-none to-text" />
-      <Footer>
+      <div className="flex items-center justify-center bg-text dark:bg-cardColor px-5 py-5 w-full">
         {isEditing
           ? <>
             <ButtonCancel name="Cancel" />
@@ -55,7 +54,7 @@ export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
             <ButtonSaveDraft />
             <ButtonSaveChanges name="Save & Send" />
           </>}
-      </Footer>
+      </div>
     </form >
   )
 }

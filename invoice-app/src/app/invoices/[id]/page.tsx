@@ -35,21 +35,29 @@ export default async function InvoicePage({ params }: { params: { id: string } }
               <ButtonPaid id={params.id} />
             </div>
           </div>
-          <div className="flex flex-col justify-between w-full px-6 py-6 mb-14 bg-text dark:bg-cardColor text-sm text-secondary dark:text-secondaryPale rounded-md shadow-modal">
-            <IdHeadline id={invoice.id}></IdHeadline>
-            <p className="mb-8">{invoice.description}</p>
-            <p>{invoice.senderAddress.street}</p>
-            <p>{invoice.senderAddress.city}</p>
-            <p>{invoice.senderAddress.postcode}</p>
-            <p>{invoice.senderAddress.country}</p>
-            <div className="flex justify-start mb-8">
+          <div className="flex flex-col justify-between w-full p-6 mb-14 bg-text dark:bg-cardColor text-sm text-secondary dark:text-secondaryPale rounded-md shadow-modal md:p-8">
+            <div className="flex flex-col md:flex-row md:justify-between md:w-full">
+              <div className="flex flex-col">
+                <IdHeadline id={invoice.id}></IdHeadline>
+                <p className="mb-8">{invoice.description}</p>
+              </div>
+              <div className="flex flex-col">
+                <p>{invoice.senderAddress.street}</p>
+                <p>{invoice.senderAddress.city}</p>
+                <p>{invoice.senderAddress.postcode}</p>
+                <p>{invoice.senderAddress.country}</p>
+              </div>
+            </div>
+            <div className="flex justify-start mb-8 md:grid md:grid-cols-3">
               <div className="flex flex-col w-6/12">
                 <Subtitle subtitle="Invoice Date" />
                 <SubtitleBold subtitle={formatDate(invoice.createdAt)} />
                 <Subtitle subtitle="Payment Due" />
                 <SubtitleBold subtitle={formatDate(invoice.paymentDue)} />
-                <Subtitle subtitle="Sent to" />
-                <SubtitleBold subtitle={invoice.client.clientEmail} />
+                <div className="md:hidden">
+                  <Subtitle subtitle="Sent to" />
+                  <SubtitleBold subtitle={invoice.client.clientEmail} />
+                </div>
               </div>
               <div className="flex flex-col">
                 <Subtitle subtitle="Bill To" />
@@ -58,6 +66,10 @@ export default async function InvoicePage({ params }: { params: { id: string } }
                 <p>{invoice.client.clientAddress.city}</p>
                 <p>{invoice.client.clientAddress.postcode}</p>
                 <p>{invoice.client.clientAddress.country}</p>
+              </div>
+              <div className="hidden md:block">
+                <Subtitle subtitle="Sent to" />
+                <SubtitleBold subtitle={invoice.client.clientEmail} />
               </div>
             </div>
             <div className="bg-tableColor dark:bg-headerBackground px-6 pt-6 rounded-tl-lg rounded-tr-lg">

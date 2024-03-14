@@ -4,7 +4,7 @@
 
 @layer components {
   .field {
-    @apply border border-secondaryPale dark:border-headerBackground text-headerText dark:text-text dark:bg-cardColor dark:disabled:text-secondaryDark dark:disabled:bg-black text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-4;
+    @apply border border-secondaryPale dark:border-headerBackground text-headerText dark:text-text dark:bg-cardColor dark:disabled:text-secondaryDark dark:disabled:bg-black text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-3;
   }
   .field-label {
     @apply text-secondary dark:text-secondaryDark text-sm leading-4 mt-4 mb-2

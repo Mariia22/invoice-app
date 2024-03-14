@@ -4,7 +4,7 @@ import { paymentTermsOptions } from "./formData";
 
 export default function FormPaymentSection({ register, isEditing }: { register: UseFormRegister<FormInput>, isEditing: boolean }) {
   return (
-    <section className="flex flex-col mt-10 px-6 w-full gap-y-6">
+    <section className="flex flex-col mt-10 px-6 w-full gap-y-6 md:px-14">
       <div className="text-left flex flex-col w-full gap-y-2">
         <label className="field-label">Invoice Date</label>
         <input {...register(`invoiceData`, { required: `The field is required` })} className="field" type={isEditing ? "text" : "date"} disabled={isEditing} />

@@ -99,7 +99,7 @@ export const billFromData:FormField[]= [
       label: "Country",
       type: "text",
       required: true,
-      gridCols: 2,
+      gridCols: 1,
       gridTabletCols: 1
     }
   ]
@@ -156,7 +156,7 @@ export const billFromData:FormField[]= [
       label: "Country",
       type: "text",
       required: true,
-      gridCols: 2,
+      gridCols: 1,
       gridTabletCols: 1
     }
   ]

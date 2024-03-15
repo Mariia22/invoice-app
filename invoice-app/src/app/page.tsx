@@ -59,7 +59,7 @@ export default async function Invoices({ searchParams }: { searchParams: { [key:
         </div>
       </Suspense>
       <PortalFormWrapper>
-        <ModalEditInvoice />
+        <ModalEditInvoice isEditing={false} />
       </PortalFormWrapper>
     </div>
   );

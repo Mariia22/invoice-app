@@ -12,7 +12,7 @@ export default function ButtonCancel({ name }: { name: string }) {
 
   return (
     <Button
-      style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale"
+      style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale px-6 py-4"
       onClick={cancel}
       text={name} />
   )

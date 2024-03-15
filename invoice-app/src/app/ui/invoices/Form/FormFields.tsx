@@ -12,7 +12,7 @@ export default function FormFields({ data, register, errors }: { data: FormField
               {...register(field.name, {
                 required: `The field is required`,
               })}
-              className={`border border-secondaryPale dark:border-headerBackground text-headerText dark:text-text dark:bg-cardColor text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-4 col-span-${field.gridCols} md:col-span-${field.gridTabletCols}`}
+              className={`border border-secondaryPale dark:border-headerBackground text-headerText dark:text-text dark:bg-cardColor text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 px-4 sm:col-span-${field.gridCols} col-span-${field.gridTabletCols}`}
               type={field.type}
             />
             {errors[field.name] && (

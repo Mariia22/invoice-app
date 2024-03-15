@@ -9,7 +9,7 @@ export default function ButtonSaveDraft() {
 
   return (
     <Button
-      style="bg-draftColor text-secondaryDark dark:secondaryPale"
+      style="bg-draftColor text-secondaryDark"
       onClick={saveDraft}
       text="Save as Draft" />
   )

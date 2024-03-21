@@ -10,7 +10,7 @@ type CheckboxProps = {
 export default function Checkbox({ id, checked, name, onChange }: CheckboxProps) {
   return (
     <div className="w-full flex flex-row items-center gap-2">
-      <input type="checkbox" id={id} name={name} checked={checked} onChange={onChange} className="relative peer shrink-0 appearance-none w-4 h-4 border border-primary rounded-sm bg-secondaryPale dark:bg-cardColor mt-1 cursor-pointer checked:bg-primary dark:checked:bg-primary checked:border-0 outline-none focus:outline-none" />
+      <input type="checkbox" id={id} name={name} checked={checked} onChange={onChange} className="relative peer shrink-0 appearance-none w-4 h-4 hover:border border-primary rounded-sm bg-secondaryPale dark:bg-cardColor mt-1 cursor-pointer checked:bg-primary dark:checked:bg-primary checked:border-0 outline-none focus:outline-none" />
       <svg className="absolute w-4 h-4 mt-1 hidden peer-checked:block pointer-events-none"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 10 9"

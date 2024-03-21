@@ -11,7 +11,7 @@ export default function Logo() {
 
   return (
     <Link href="/">
-      <Image src="/assets/logoColor.svg" width={80} height={80} alt="Logo" priority={true} className="object-contain h-auto hover:cursor-pointer md:h-[5rem]" onClick={() => setFormModal(false)} />
+      <Image src="/assets/logoColor.svg" width={80} height={80} alt="Logo" priority={true} className="object-contain w-auto h-auto hover:cursor-pointer md:h-[5rem] xl:w-[103px] xl:h-[103px]" onClick={() => setFormModal(false)} />
     </Link>
   )
 }

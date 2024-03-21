@@ -31,7 +31,7 @@ export default function ThemeSwitch() {
 
   return (
     domLoaded &&
-    <Image src={src} width={20} height={20} alt="light mode" priority={false} onClick={handleClick} className="mr-6 hover:cursor-pointer" />
+    <Image src={src} width={20} height={20} alt="light mode" priority={false} onClick={handleClick} className="mr-6 hover:cursor-pointer xl:mr-0" />
   )
 
 }

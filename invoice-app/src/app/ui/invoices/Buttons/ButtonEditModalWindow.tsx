@@ -14,7 +14,7 @@ export default function ButtonEditModalWindow() {
 
   return (
     <Button
-      style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale"
+      style="py-4 px-6 bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale hover:bg-secondaryPale"
       onClick={openModalForDeletingInvoice}
       text="Edit" />
   )

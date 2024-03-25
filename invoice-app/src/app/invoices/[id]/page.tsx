@@ -105,7 +105,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
         <ModalDeleteInvoice id={params.id} />
       </PortalWrapper>
       <PortalFormWrapper>
-        <ModalEditInvoice id={params.id} invoice={invoice} isEditing={true}/>
+        <ModalEditInvoice id={params.id} invoice={invoice} isEditing={true} />
       </PortalFormWrapper>
     </>
   )

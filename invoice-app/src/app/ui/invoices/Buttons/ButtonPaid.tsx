@@ -9,7 +9,7 @@ export default function ButtonPaid({ id }: { id: string }) {
 
   return (
     <Button
-      style="bg-primary text-text"
+      style="py-4 px-6 bg-primary text-text hover:bg-primaryPale"
       onClick={markInvoice}
       text="Mark as Paid" />
   )

@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="flex flex-col font-medium w-screentext-[13px] bg-background dark:bg-darkText xl:flex-row xl:justify-between 2xl:justify-center">
         <Providers>
           <Header />
-          <main>
+          <main className="xl:w-3/5">
             {children}
           </main>
           <div id="modal-root" />

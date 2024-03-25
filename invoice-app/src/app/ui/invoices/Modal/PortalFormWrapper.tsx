@@ -14,6 +14,6 @@ export default function PortalFormWrapper({ children }: { children: React.ReactN
       : document.body.style.overflow = "scroll"
   }, [isFormOpen])
 
-  return isFormOpen ? <Portal classes="fixed left-0 top-20 w-full h-full flex items-start bg-black bg-opacity-50 z-10 overflow-y-auto">{children}</Portal> : null
+  return isFormOpen ? <Portal classes="fixed left-0 top-20 w-full h-full flex items-start bg-black bg-opacity-50 z-10 overflow-y-auto xl:top-0">{children}</Portal> : null
 };
 

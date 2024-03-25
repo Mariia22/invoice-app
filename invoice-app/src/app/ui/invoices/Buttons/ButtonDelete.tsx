@@ -14,7 +14,7 @@ export default function ButtonDelete() {
 
   return (
     <Button
-      style="py-4 px-6 bg-contrast text-text hover:bg-contrastPale"
+      style="bg-contrast text-text hover:bg-contrastPale md:py-4 md:px-6"
       onClick={openModalForDeletingInvoice}
       text="Delete" />
   )

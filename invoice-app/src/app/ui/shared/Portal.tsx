@@ -1,9 +1,15 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function Portal({ children, classes }: { children: React.ReactNode, classes: string }) {
+type PortalProps = {
+  children: ReactNode,
+  classes: string,
+  closePortal: () => void
+}
+
+export default function Portal({ children, classes, closePortal }: PortalProps) {
   const [mounted, setMounted] = useState(false)
   const element = document.getElementById("modal-root") as Element
 
@@ -13,6 +19,6 @@ export default function Portal({ children, classes }: { children: React.ReactNod
   }, [])
 
   return mounted
-    ? createPortal(<dialog className={classes}>{children}</dialog>, element)
+    ? createPortal(<dialog className={classes} onClick={closePortal}>{children}</dialog>, element)
     : null
 };

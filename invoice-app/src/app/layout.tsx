@@ -21,12 +21,14 @@ export default function RootLayout({
       <head>
         <link rel="shortcut icon" href="/assets/favicon.png" />
       </head>
-      <body className="flex flex-col font-medium w-screentext-[13px] bg-background dark:bg-darkText xl:flex-row xl:justify-between">
+      <body className="font-medium w-screentext-[13px] bg-background dark:bg-darkText">
         <Providers>
-          <Header />
-          <main className="xl:w-3/5">
-            {children}
-          </main>
+          <div className="flex flex-col xl:flex-row xl:gap-52">
+            <Header />
+            <main className="xl:w-3/5">
+              {children}
+            </main>
+          </div>
           <div id="modal-root" />
         </Providers>
       </body>

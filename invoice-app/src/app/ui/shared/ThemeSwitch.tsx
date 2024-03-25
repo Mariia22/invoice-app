@@ -28,9 +28,9 @@ export default function ThemeSwitch() {
   function handleClick() {
     resolvedTheme === "light" ? setTheme('dark') : setTheme('light')
   }
+  if (!domLoaded) return null
 
   return (
-    domLoaded &&
     <Image src={src} width={20} height={20} alt="light mode" priority={false} onClick={handleClick} className="mr-6 hover:cursor-pointer xl:mr-0" />
   )
 

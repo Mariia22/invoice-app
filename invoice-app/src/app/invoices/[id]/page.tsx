@@ -35,7 +35,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
   return (
     <>
       <div className="py-8 px-6 bg-background text-darkText dark:bg-darkText dark:text-background">
-        <ButtonBack />
+        <ButtonBack url="/" />
         <>
           <div className="flex items-center justify-between w-full px-6 py-6 mt-8 mb-4 bg-text dark:bg-cardColor rounded-md shadow-modal">
             <div className="flex items-center justify-between w-full md:justify-start md:w-fit md:gap-5">

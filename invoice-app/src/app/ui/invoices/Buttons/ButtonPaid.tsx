@@ -2,15 +2,21 @@
 
 import Button from "../../shared/Button"
 
-export default function ButtonPaid({ id }: { id: string }) {
-  function markInvoice() {
-    console.log("Mark as Paid", id)
-  }
+type ButtonPaidProps = {
+  disabled?: boolean
+  handleClick: () => Promise<void>
+}
+
+export default function ButtonPaid({ disabled, handleClick }: ButtonPaidProps) {
 
   return (
-    <Button
-      style="bg-primary text-text hover:bg-primaryPale md:py-4 md:px-6"
-      onClick={markInvoice}
-      text="Mark as Paid" />
+    <form action={handleClick}>
+      <Button
+        style="bg-primary text-text hover:bg-primaryPale md:py-4 md:px-6 md:h-12"
+        type="submit"
+        disabled={disabled}
+        text="Mark as Paid" />
+    </form>
   )
+
 }

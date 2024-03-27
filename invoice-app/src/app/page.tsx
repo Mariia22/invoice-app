@@ -17,13 +17,16 @@ export default async function Invoices({ searchParams }: { searchParams: { [key:
       : [];
   let data: Invoice[] | undefined = [];
   let numberOfInvoices: number;
+  let statusOfInvoices: string = '';
 
   if (statuses.length === 0) {
     data = await getAllInvoices();
     numberOfInvoices = data?.length || 0;
+    statusOfInvoices = 'total'
   } else {
     data = await getFilteredInvoices(statuses)
     numberOfInvoices = data?.length || 0;
+    statusOfInvoices = statuses.join("/").toLowerCase()
   }
 
 
@@ -33,7 +36,7 @@ export default async function Invoices({ searchParams }: { searchParams: { [key:
         <div>
           <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>
           <p className="text-secondaryDark md:hidden">{numberOfInvoices > 0 ? numberOfInvoices : "No"} invoices</p>
-          <p className="hidden text-secondaryDark md:inline-block">{numberOfInvoices > 0 ? `There are ${numberOfInvoices} total` : "No"} invoices</p>
+          <p className="hidden text-secondaryDark md:inline-block">{numberOfInvoices > 0 ? `There are ${numberOfInvoices} ${statusOfInvoices}` : "No"} invoices</p>
         </div>
         <div className="flex items-center gap-4 md:gap-10 group">
           <InvoiceFilter statuses={statuses} />

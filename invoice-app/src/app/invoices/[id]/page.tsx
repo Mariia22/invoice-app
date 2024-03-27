@@ -8,7 +8,7 @@ import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
 import Footer from "@/app/ui/shared/Footer";
-import { getInvoiceById } from "@/app/lib/data";
+import { getInvoiceById, setInvoiceStatusToPaid } from "@/app/lib/data";
 import { Status } from "@/app/lib/types";
 import ModalDeleteInvoice from "@/app/ui/invoices/Modal/ModalDeleteInvoice";
 import PortalWrapper from "@/app/ui/invoices/Modal/PortalWrapper";
@@ -18,6 +18,13 @@ import PortalFormWrapper from "@/app/ui/invoices/Modal/PortalFormWrapper";
 
 export default async function InvoicePage({ params }: { params: { id: string } }) {
   const invoice = await getInvoiceById(params.id)
+
+  async function handleClickPaidButton(id: string) {
+    "use server";
+    await setInvoiceStatusToPaid(id)
+  }
+
+  const handleClickPaidButtonWithId = handleClickPaidButton.bind(null, params.id);
 
   if (!invoice) {
     return (<div>Invoice is not found</div>)
@@ -36,7 +43,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
             <div className="hidden md:flex md:h-12">
               <ButtonEditModalWindow />
               <ButtonDelete />
-              <ButtonPaid id={params.id} />
+              <ButtonPaid disabled={Status[invoice.status] === Status.Paid} handleClick={handleClickPaidButtonWithId} />
             </div>
           </div>
           <div className="flex flex-col justify-between w-full p-6 mb-14 bg-text dark:bg-cardColor text-sm text-secondary dark:text-secondaryPale rounded-md shadow-modal md:p-8">
@@ -99,7 +106,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
       <Footer>
         <ButtonEdit id={params.id} />
         <ButtonDelete />
-        <ButtonPaid id={params.id} />
+        <ButtonPaid disabled={Status[invoice.status] === Status.Paid} handleClick={handleClickPaidButtonWithId} />
       </Footer>
       <PortalWrapper>
         <ModalDeleteInvoice id={params.id} />

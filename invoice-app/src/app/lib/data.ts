@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "../../../prisma/client";
 import { Status } from "./types";
 
@@ -79,4 +79,24 @@ export async function getInvoiceById (id:string) {
   } catch (error){
     console.error('Database Error:', error)
   }
+ }
+
+ export async function setInvoiceStatusToPaid (id:string) {
+  noStore ();
+  try {
+    const updateInvoice =  await prisma?.invoice.update({
+      where:{
+        id: id
+      },
+      data: {
+        status: Status.Paid
+      }
+    })
+     if(!updateInvoice) {return {error: "Status doesn't change"}}
+     return updateInvoice
+  }
+  catch (error) { 
+    console.error('Database Error:', error)
+  }
+  revalidatePath(`/invoices/${id}`)
  }

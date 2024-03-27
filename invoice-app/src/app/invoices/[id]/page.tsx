@@ -8,7 +8,7 @@ import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
 import Footer from "@/app/ui/shared/Footer";
-import { getInvoiceById, setInvoiceStatusToPaid } from "@/app/lib/data";
+import { deleteInvoice, getInvoiceById, setInvoiceStatusToPaid } from "@/app/lib/data";
 import { Status } from "@/app/lib/types";
 import ModalDeleteInvoice from "@/app/ui/invoices/Modal/ModalDeleteInvoice";
 import PortalWrapper from "@/app/ui/invoices/Modal/PortalWrapper";
@@ -25,8 +25,14 @@ export default async function InvoicePage({ params }: { params: { id: string } }
     await setInvoiceStatusToPaid(id)
     revalidatePath(`/invoices/${id}`)
   }
-
   const handleClickPaidButtonWithId = handleClickPaidButton.bind(null, params.id);
+
+  async function handleDeleteInvoice(id: string) {
+    "use server";
+    await deleteInvoice(id)
+    revalidatePath(`/`)
+  }
+  const handleDeleteInvoiceWithId = handleDeleteInvoice.bind(null, params.id);
 
   if (!invoice) {
     return (<div>Invoice is not found</div>)
@@ -111,7 +117,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
         <ButtonPaid disabled={Status[invoice.status] === Status.Paid} handleClick={handleClickPaidButtonWithId} />
       </Footer>
       <PortalWrapper>
-        <ModalDeleteInvoice id={params.id} />
+        <ModalDeleteInvoice id={params.id} handleClick={handleDeleteInvoiceWithId} />
       </PortalWrapper>
       <PortalFormWrapper>
         <ModalEditInvoice id={params.id} invoice={invoice} isEditing={true} />

@@ -92,7 +92,22 @@ export async function getInvoiceById (id:string) {
         status: Status.Paid
       }
     })
-     if(!updateInvoice) {return {error: "Status doesn't change"}}
+     if(!updateInvoice) {return {error: "The status didn't change"}}
+  }
+  catch (error) { 
+    console.error('Database Error:', error)
+  }
+ }
+
+ export async function deleteInvoice (id:string) {
+  noStore ();
+  try {
+    const deleteInvoice =  await prisma?.invoice.delete({
+      where:{
+        id: id
+      }
+    })
+     if(!deleteInvoice) {return {error: "The invoice didn't delete"}}
   }
   catch (error) { 
     console.error('Database Error:', error)

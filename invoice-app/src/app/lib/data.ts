@@ -93,10 +93,8 @@ export async function getInvoiceById (id:string) {
       }
     })
      if(!updateInvoice) {return {error: "Status doesn't change"}}
-     return updateInvoice
   }
   catch (error) { 
     console.error('Database Error:', error)
   }
-  revalidatePath(`/invoices/${id}`)
  }

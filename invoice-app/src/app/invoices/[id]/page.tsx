@@ -15,6 +15,7 @@ import PortalWrapper from "@/app/ui/invoices/Modal/PortalWrapper";
 import ButtonEditModalWindow from "@/app/ui/invoices/Buttons/ButtonEditModalWindow";
 import ModalEditInvoice from "@/app/ui/invoices/Modal/ModalEditInvoice";
 import PortalFormWrapper from "@/app/ui/invoices/Modal/PortalFormWrapper";
+import { revalidatePath } from "next/cache";
 
 export default async function InvoicePage({ params }: { params: { id: string } }) {
   const invoice = await getInvoiceById(params.id)
@@ -22,6 +23,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
   async function handleClickPaidButton(id: string) {
     "use server";
     await setInvoiceStatusToPaid(id)
+    revalidatePath(`/invoices/${id}`)
   }
 
   const handleClickPaidButtonWithId = handleClickPaidButton.bind(null, params.id);

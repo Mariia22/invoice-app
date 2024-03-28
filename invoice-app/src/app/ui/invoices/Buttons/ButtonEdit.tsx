@@ -12,7 +12,7 @@ export default function ButtonEdit({ id }: { id: string }) {
 
   return (
     <Button
-      style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale"
+      style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale hover:bg-secondaryPale"
       onClick={editInvoice}
       text="Edit" />
   )

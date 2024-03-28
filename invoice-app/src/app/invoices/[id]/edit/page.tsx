@@ -13,7 +13,7 @@ export default async function EditPage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="mt-8 mx-6">
+      <div className="pt-8 px-6 bg-text dark:bg-darkText">
         <ButtonBack url={`/invoices/${params.id}`} />
         <div className="mt-6 text-2xl font-bold text-headerText dark:text-text">Edit <IdHeadline id={params.id} /></div>
       </div>

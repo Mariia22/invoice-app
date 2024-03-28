@@ -45,11 +45,11 @@ export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
       <div className="w-full h-[64px] bg-gradient-to-t from-blackShadow dark:bg-none to-text xl:hidden" />
       {isEditing
         ? <div className="w-full flex items-center justify-center bg-text dark:bg-cardColor px-3 py-5 md:justify-end md:pr-14 md:rounded-r-xl xl:py-8">
-          <ButtonCancel name="Cancel" />
+          <ButtonCancel url={`/invoices/${invoice?.id}`} name="Cancel" />
           <ButtonSaveChanges name="Save Changes" />
         </div>
         : <div className="w-full flex items-center justify-center bg-text dark:bg-cardColor px-3 p-5 md:justify-between xl:py-8">
-          <ButtonCancel name="Discard" />
+          <ButtonCancel url="/" name="Discard" />
           <div className="flex items-center justify-center md:px-14">
             <ButtonSaveDraft />
             <ButtonSaveChanges name="Save & Send" />

@@ -2,7 +2,7 @@
 
 import { ModalType } from "@/app/lib/types";
 import { ModalWindow } from "@/app/providers";
-import { MouseEvent, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Portal from "../../shared/Portal";
 
 export default function PortalWrapper({ children }: { children: React.ReactNode }) {

@@ -41,6 +41,7 @@ export type ModalFormType = {
 }
 
 export type FormInput = {
+  id: string
   senderStreetAddress: string
   senderCity: string
   senderPostCode: string

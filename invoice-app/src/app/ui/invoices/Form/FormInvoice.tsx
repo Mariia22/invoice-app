@@ -1,6 +1,6 @@
 'use client'
 
-import { FormInput, Invoice } from "@/app/lib/types"
+import { FormInput, Invoice, Status } from "@/app/lib/types"
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
@@ -11,6 +11,7 @@ import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
 import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
+import { createInvoice } from "@/app/lib/data"
 
 type FormInvoice = {
   isEditing: boolean;
@@ -20,7 +21,7 @@ type FormInvoice = {
 export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
-  const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<FormInput> = (data) => createInvoice(data, Status.Pending)
 
   function addNewItem() {
     append({ name: "", quantity: 0, price: 0, total: 0 })

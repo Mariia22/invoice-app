@@ -17,7 +17,7 @@ datasource db {
 model Client {
   id            Int       @id @default(autoincrement())
   clientName    String
-  clientEmail   String
+  clientEmail   String    @unique
   clientAddress Address   @relation(fields: [addressId], references: [id])
   Invoice       Invoice[]
   addressId     Int
@@ -35,12 +35,13 @@ model Item {
 
 model Address {
   id       Int       @id @default(autoincrement())
-  street   String
+  street   String    
   city     String
   postcode String
   country  String
   Client   Client[]
   Invoice  Invoice[]
+  @@unique(name: "address",[street, city, postcode, country])
 }
 
 enum Status {

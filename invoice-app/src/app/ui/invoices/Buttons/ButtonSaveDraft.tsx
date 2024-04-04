@@ -3,14 +3,10 @@
 import Button from "../../shared/Button"
 
 export default function ButtonSaveDraft() {
-  function saveDraft() {
-    console.log("Saved as Draft")
-  }
-
   return (
     <Button
+      type="submit"
       style="bg-draftColor text-secondaryDark"
-      onClick={saveDraft}
       text="Save as Draft" />
   )
 }

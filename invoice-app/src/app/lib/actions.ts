@@ -7,9 +7,11 @@ import { FormInput, Status } from "./types"
 
 export async function createNewInvoice(id:string, data: FormInput, status: Status) {
   console.log(data,status)
+  const currentDate = new Date(Date.parse(data.invoiceData));
+  const paymentData = new Date(currentDate.setDate(currentDate.getDate() + Number(data.paymentTerms)));
   const items = data.items.map((item) =>({name: item.name,quantity: item.quantity,price: item.price,total: item.total}))
   const total = data.items.reduce((acc,item) => acc + item.total, 0)
-  await createInvoiceDB(id, data, items, total, status)
+  await createInvoiceDB(id, data, items, total, status, paymentData)
   revalidatePath(`/`)
 }
 

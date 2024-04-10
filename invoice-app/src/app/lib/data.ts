@@ -114,7 +114,7 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function createInvoiceDB (id:string, formData:FormInput, items:Item[], total:number, status:Status) {
+ export async function createInvoiceDB (id:string, formData:FormInput, items:Item[], total:number, status:Status, paymentData:Date) {
   noStore ();
   // const existingSenderAddress = await prisma.address.findFirst({ 
   //   where: {  
@@ -174,7 +174,7 @@ export async function getInvoiceById (id:string) {
 
     const newInvoice = await prisma?.invoice.create({
       data:{
-      paymentDue: formData.paymentTerms.toString(),
+      paymentDue: paymentData,
       paymentTerms: formData.paymentTerms,
       description: formData.description,
       status:status,

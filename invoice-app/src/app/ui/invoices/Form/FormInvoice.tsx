@@ -1,7 +1,7 @@
 'use client'
 
 import { FormInput, Invoice, Status } from "@/app/lib/types"
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
@@ -11,24 +11,29 @@ import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
 import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
-import { createInvoice } from "@/app/lib/data"
+import { createNewInvoice } from "@/app/lib/actions"
+import { useId } from "react"
 
 type FormInvoice = {
   isEditing: boolean;
-  invoice?: Invoice
+  invoice?: Invoice;
 }
 
 export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
-  const onSubmit: SubmitHandler<FormInput> = (data) => createInvoice(data, Status.Pending)
+  const id = useId();
+
+  const onMyFormSubmit = async (data: FormInput, status: Status) => {
+    await createNewInvoice(id, data, status);
+  }
 
   function addNewItem() {
     append({ name: "", quantity: 0, price: 0, total: 0 })
   }
 
   return (
-    <form className="flex flex-col justify-start items-center w-full m-auto bg-text dark:bg-darkText md:m-0" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col justify-start items-center w-full m-auto bg-text dark:bg-darkText md:m-0" onSubmit={handleSubmit((data) => onMyFormSubmit(data, Status.Pending))}>
       <FormSection marginTop={6}>
         <FormHeader header="Bill From" />
         <FormFields data={billFromData} register={register} errors={errors} />

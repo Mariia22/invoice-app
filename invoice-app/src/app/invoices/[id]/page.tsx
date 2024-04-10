@@ -8,31 +8,19 @@ import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
 import Footer from "@/app/ui/shared/Footer";
-import { deleteInvoice, getInvoiceById, setInvoiceStatusToPaid } from "@/app/lib/data";
+import { getInvoiceById } from "@/app/lib/data";
 import { Status } from "@/app/lib/types";
 import ModalDeleteInvoice from "@/app/ui/invoices/Modal/ModalDeleteInvoice";
 import PortalWrapper from "@/app/ui/invoices/Modal/PortalWrapper";
 import ButtonEditModalWindow from "@/app/ui/invoices/Buttons/ButtonEditModalWindow";
 import ModalEditInvoice from "@/app/ui/invoices/Modal/ModalEditInvoice";
 import PortalFormWrapper from "@/app/ui/invoices/Modal/PortalFormWrapper";
-import { revalidatePath } from "next/cache";
+import { deleteInvoice, setPaidStatusToInvoice } from "@/app/lib/actions";
 
 export default async function InvoicePage({ params }: { params: { id: string } }) {
   const invoice = await getInvoiceById(params.id)
-
-  async function handleClickPaidButton(id: string) {
-    "use server";
-    await setInvoiceStatusToPaid(id)
-    revalidatePath(`/invoices/${id}`)
-  }
-  const handleClickPaidButtonWithId = handleClickPaidButton.bind(null, params.id);
-
-  async function handleDeleteInvoice(id: string) {
-    "use server";
-    await deleteInvoice(id)
-    revalidatePath(`/`)
-  }
-  const handleDeleteInvoiceWithId = handleDeleteInvoice.bind(null, params.id);
+  const handleClickPaidButtonWithId = setPaidStatusToInvoice.bind(null, params.id);
+  const handleDeleteInvoiceWithId = deleteInvoice.bind(null, params.id);
 
   if (!invoice) {
     return (<div>Invoice is not found</div>)

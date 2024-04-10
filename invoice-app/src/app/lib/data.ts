@@ -1,6 +1,6 @@
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import prisma from "../../../prisma/client";
-import { FormInput, Status } from "./types";
+import { FormInput, Item, Status } from "./types";
 
 export async function getAllInvoices (){
   noStore ();
@@ -81,7 +81,7 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function setInvoiceStatusToPaid (id:string) {
+ export async function setInvoiceStatusToPaidDB (id:string) {
   noStore ();
   try {
     const updateInvoice =  await prisma?.invoice.update({
@@ -99,7 +99,7 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function deleteInvoice (id:string) {
+ export async function deleteInvoiceDB (id:string) {
   noStore ();
   try {
     const deleteInvoice =  await prisma?.invoice.delete({
@@ -114,50 +114,34 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function createInvoice (formData:FormInput, status:Status) {
+ export async function createInvoiceDB (id:string, formData:FormInput, items:Item[], total:number, status:Status) {
   noStore ();
-  const existingSenderAddress = await prisma.address.findFirst({ 
-    where: {  
-      street: formData.senderStreetAddress,
-      city: formData.senderCity,
-      postcode: formData.senderPostCode,
-      country: formData.senderCountry
-   } 
-  }) 
-  const existingClientAddress = await prisma.address.findFirst({ 
-    where: {  
-      street: formData.clientStreetAddress,
-      city: formData.clientCity,
-      postcode: formData.clientPostCode,
-      country: formData.clientCountry
-   } 
-  })
-
-  const items = formData.items.map((item) =>({name: item.name,quantity: item.quantity,price: item.price,total: item.total}))
-  const total = formData.items.reduce((acc,item) => acc + item.total, 0)
-  
+  // const existingSenderAddress = await prisma.address.findFirst({ 
+  //   where: {  
+  //     street: formData.senderStreetAddress,
+  //     city: formData.senderCity,
+  //     postcode: formData.senderPostCode,
+  //     country: formData.senderCountry
+  //  } 
+  // }) 
   try {
-    const clientAddress = await prisma.address.upsert({
-          where: {
-            id:existingClientAddress?.id,
-            street: formData.clientStreetAddress,
-            city: formData.clientCity,
-            postcode: formData.clientPostCode,
-            country: formData.clientCountry
-          },
-          update:{
-            street: formData.clientStreetAddress,
-            city: formData.clientCity,
-            postcode: formData.clientPostCode,
-            country: formData.clientCountry
-          },
-          create: {
-            street: formData.clientStreetAddress,
-            city: formData.clientCity,
-            postcode: formData.clientPostCode,
-            country: formData.clientCountry
-          }
-    })
+    // const clientAddress = await prisma.address.upsert({
+    //       where: {
+    //         address: {street: formData.clientStreetAddress, city:formData.clientCity,postcode:formData.clientPostCode,country: formData.clientCountry}
+    //       },
+    //       update:{
+    //         street: formData.clientStreetAddress,
+    //         city: formData.clientCity,
+    //         postcode: formData.clientPostCode,
+    //         country: formData.clientCountry
+    //       },
+    //       create: {
+    //         street: formData.clientStreetAddress,
+    //         city: formData.clientCity,
+    //         postcode: formData.clientPostCode,
+    //         country: formData.clientCountry
+    //       }
+    // })
 
     const client = await prisma.client.upsert ({
       where: {
@@ -171,26 +155,31 @@ export async function getInvoiceById (id:string) {
         clientName: formData.clientName,
         clientEmail: formData.clientEmail,
         clientAddress:{
-          connect: { 
-           id: clientAddress.id  
-          },
+          connectOrCreate: {
+            where:{
+              address: {street: formData.clientStreetAddress, city:formData.clientCity,postcode:formData.clientPostCode,country: formData.clientCountry}
+            },
+            create: {
+              street: formData.clientStreetAddress,
+              city: formData.clientCity,
+              postcode: formData.clientPostCode,
+              country: formData.clientCountry,
+              }
+            }
         }
       }
     })
 
-    const newInvoice = await prisma?.invoice.upsert({
-      where: {
-        id: formData.id,
-      },
-      update: {
+    if(!client) {return {error: "The client wasn't created"}}
+
+    const newInvoice = await prisma?.invoice.create({
+      data:{
       paymentDue: formData.paymentTerms.toString(),
       paymentTerms: formData.paymentTerms,
       description: formData.description,
       status:status,
       total: total,
-      },
-      create:{
-      id: formData.id,
+      id: id,
       client: {
         connect:{
             id: client.id
@@ -199,7 +188,7 @@ export async function getInvoiceById (id:string) {
       senderAddress:{
         connectOrCreate: {
         where:{
-            id: existingSenderAddress?.id
+          address: {street: formData.senderStreetAddress, city:formData.senderCity,postcode:formData.senderPostCode,country: formData.senderCountry}
         },
         create: {
           street: formData.senderStreetAddress,
@@ -209,11 +198,6 @@ export async function getInvoiceById (id:string) {
           }
         }
       },
-      paymentDue: formData.paymentTerms.toString(),
-      paymentTerms: formData.paymentTerms,
-      description: formData.description,
-      status:status,
-      total: total,
       item: {
       create: [...items]
       }
@@ -225,5 +209,3 @@ export async function getInvoiceById (id:string) {
     console.error('Database Error:', error)
   }
  }
-
- 

@@ -10,7 +10,6 @@ export async function createNewInvoice(data: FormInput, status: Status) {
   let invoiceId = generateInvoiceId(6);
   const currentDate = new Date(Date.parse(data.invoiceData));
   const paymentData = new Date(currentDate.setDate(currentDate.getDate() + Number(data.paymentTerms)));
-  const items = data.items.map((item,index) =>({id:index, name: item.name,quantity: item.quantity,price: item.price,total: item.total, invoiceId:invoiceId}))
   const total = data.items.reduce((acc,item) => acc + item.total, 0)
   const client:Client = {
     id: 0,
@@ -25,7 +24,7 @@ export async function createNewInvoice(data: FormInput, status: Status) {
       country: data.clientCountry
     }
   }
-  const invoice:Invoice = {
+  const invoice:Omit<Invoice, "item"> = {
     id: invoiceId, 
     createdAt: currentDate,
     description: data.description, 
@@ -34,7 +33,6 @@ export async function createNewInvoice(data: FormInput, status: Status) {
     status: status,
     clientId: 0,
     client: client,
-    item: items,
     total: total,
     addressId: 0,
     senderAddress: {
@@ -46,7 +44,7 @@ export async function createNewInvoice(data: FormInput, status: Status) {
     }
 
   }
-  await createInvoiceDB(invoice, client)
+  await createInvoiceDB(invoice, client, data.items)
   revalidatePath(`/`)
 }
 

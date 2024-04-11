@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "../../../prisma/client";
-import { Client, Invoice, Status } from "./types";
+import { Client, Invoice, Item, Status } from "./types";
 
 export async function getAllInvoices (){
   noStore ();
@@ -114,9 +114,9 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function createInvoiceDB (invoice:Invoice, client:Client) {
+ export async function createInvoiceDB (invoice:Omit<Invoice, "item">, client:Client, invoiceItems:Item[]) {
   noStore ();
-  const items = invoice.item.map((item) =>({name: item.name,quantity: +item.quantity,price: +item.price,total: item.total}))
+  const items = invoiceItems.map((item) =>({name: item.name,quantity: +item.quantity,price: +item.price,total: item.total}))
   try {
     const newClient = await prisma.client.upsert ({
       where: {

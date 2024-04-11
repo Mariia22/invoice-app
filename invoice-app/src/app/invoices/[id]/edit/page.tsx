@@ -1,4 +1,4 @@
-import { getInvoiceById } from "@/app/lib/data";
+import { getInvoiceById } from "@/app/lib/db";
 import { Invoice } from "@/app/lib/types";
 import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
 import FormInvoice from "@/app/ui/invoices/Form/FormInvoice";

@@ -8,7 +8,7 @@ import ButtonPaid from "@/app/ui/invoices/Buttons/ButtonPaid";
 import SubtitleBold from "@/app/ui/shared/SubtitleBold";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
 import Footer from "@/app/ui/shared/Footer";
-import { getInvoiceById } from "@/app/lib/data";
+import { getInvoiceById } from "@/app/lib/db";
 import { Status } from "@/app/lib/types";
 import ModalDeleteInvoice from "@/app/ui/invoices/Modal/ModalDeleteInvoice";
 import PortalWrapper from "@/app/ui/invoices/Modal/PortalWrapper";

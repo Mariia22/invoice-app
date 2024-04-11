@@ -14,3 +14,16 @@ export function formatDate(data: Date): string {
     day: "numeric"
   });
 }
+
+export function generateInvoiceId (length:number):string {
+  const letters='QWERTYUIOPASDFGHJKLZXCVBNM';
+  let id = ""
+  for (let i = 0; i<length; i++) {
+    if (i < 2) {
+      id += letters[Math.floor(Math.random() * letters.length)]
+    } else {
+        id += Math.floor(Math.random() * 10)
+    }
+  }
+  return id;
+}

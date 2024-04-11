@@ -2,16 +2,51 @@
 "use server";
 
 import { revalidatePath } from "next/cache"
-import { createInvoiceDB, deleteInvoiceDB, setInvoiceStatusToPaidDB } from "./data"
-import { FormInput, Status } from "./types"
+import { createInvoiceDB, deleteInvoiceDB, setInvoiceStatusToPaidDB } from "./db"
+import { Client, FormInput, Invoice, Status } from "./types"
+import { generateInvoiceId } from './functions';
 
-export async function createNewInvoice(id:string, data: FormInput, status: Status) {
-  console.log(data,status)
+export async function createNewInvoice(data: FormInput, status: Status) {
+  let invoiceId = generateInvoiceId(6);
   const currentDate = new Date(Date.parse(data.invoiceData));
   const paymentData = new Date(currentDate.setDate(currentDate.getDate() + Number(data.paymentTerms)));
-  const items = data.items.map((item) =>({name: item.name,quantity: item.quantity,price: item.price,total: item.total}))
+  const items = data.items.map((item,index) =>({id:index, name: item.name,quantity: item.quantity,price: item.price,total: item.total, invoiceId:invoiceId}))
   const total = data.items.reduce((acc,item) => acc + item.total, 0)
-  await createInvoiceDB(id, data, items, total, status, paymentData)
+  const client:Client = {
+    id: 0,
+    addressId: 0,
+    clientName: data.clientName,
+    clientEmail:data.clientEmail,
+    clientAddress: {
+      id:0,
+      street: data.clientStreetAddress,
+      city: data.clientCity,
+      postcode: data.clientPostCode,
+      country: data.clientCountry
+    }
+  }
+  const invoice:Invoice = {
+    id: invoiceId, 
+    createdAt: currentDate,
+    description: data.description, 
+    paymentDue: paymentData,
+    paymentTerms: Number(data.paymentTerms),
+    status: status,
+    clientId: 0,
+    client: client,
+    item: items,
+    total: total,
+    addressId: 0,
+    senderAddress: {
+      id: 0,
+      street: data.senderStreetAddress,
+      city: data.senderCity,
+      postcode: data.senderPostCode,
+      country: data.senderCountry
+    }
+
+  }
+  await createInvoiceDB(invoice, client)
   revalidatePath(`/`)
 }
 

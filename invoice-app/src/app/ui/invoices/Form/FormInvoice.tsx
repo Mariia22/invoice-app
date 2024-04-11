@@ -12,7 +12,6 @@ import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
 import { createNewInvoice } from "@/app/lib/actions"
-import { useId } from "react"
 
 type FormInvoice = {
   isEditing: boolean;
@@ -22,10 +21,9 @@ type FormInvoice = {
 export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
-  const id = useId();
 
   const onMyFormSubmit = async (data: FormInput, status: Status) => {
-    await createNewInvoice(id, data, status);
+    await createNewInvoice(data, status);
   }
 
   function addNewItem() {

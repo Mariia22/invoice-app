@@ -1,4 +1,4 @@
-import { getFilteredInvoices, getAllInvoices } from "./lib/data";
+import { getFilteredInvoices, getAllInvoices } from "./lib/db";
 import { Invoice } from "./lib/types";
 import InvoiceFilter from "./ui/invoices/InvoiceFilter";
 import ButtonAdd from "./ui/invoices/Buttons/ButtonAdd";

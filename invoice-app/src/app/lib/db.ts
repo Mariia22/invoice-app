@@ -1,6 +1,6 @@
-import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+import { unstable_noStore as noStore } from "next/cache";
 import prisma from "../../../prisma/client";
-import { FormInput, Item, Status } from "./types";
+import { Client, Invoice, Status } from "./types";
 
 export async function getAllInvoices (){
   noStore ();
@@ -114,87 +114,62 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function createInvoiceDB (id:string, formData:FormInput, items:Item[], total:number, status:Status, paymentData:Date) {
+ export async function createInvoiceDB (invoice:Invoice, client:Client) {
   noStore ();
-  // const existingSenderAddress = await prisma.address.findFirst({ 
-  //   where: {  
-  //     street: formData.senderStreetAddress,
-  //     city: formData.senderCity,
-  //     postcode: formData.senderPostCode,
-  //     country: formData.senderCountry
-  //  } 
-  // }) 
+  const items = invoice.item.map((item) =>({name: item.name,quantity: +item.quantity,price: +item.price,total: item.total}))
   try {
-    // const clientAddress = await prisma.address.upsert({
-    //       where: {
-    //         address: {street: formData.clientStreetAddress, city:formData.clientCity,postcode:formData.clientPostCode,country: formData.clientCountry}
-    //       },
-    //       update:{
-    //         street: formData.clientStreetAddress,
-    //         city: formData.clientCity,
-    //         postcode: formData.clientPostCode,
-    //         country: formData.clientCountry
-    //       },
-    //       create: {
-    //         street: formData.clientStreetAddress,
-    //         city: formData.clientCity,
-    //         postcode: formData.clientPostCode,
-    //         country: formData.clientCountry
-    //       }
-    // })
-
-    const client = await prisma.client.upsert ({
+    const newClient = await prisma.client.upsert ({
       where: {
-        clientEmail: formData.clientEmail
+        clientEmail: client.clientEmail
       },
       update: {
-        clientName: formData.clientName,
-        clientEmail: formData.clientEmail,
+        clientName: client.clientName,
+        clientEmail: client.clientEmail,
       },
       create:{
-        clientName: formData.clientName,
-        clientEmail: formData.clientEmail,
+        clientName: client.clientName,
+        clientEmail: client.clientEmail,
         clientAddress:{
           connectOrCreate: {
             where:{
-              address: {street: formData.clientStreetAddress, city:formData.clientCity,postcode:formData.clientPostCode,country: formData.clientCountry}
+              address: {street: client.clientAddress.street, city:client.clientAddress.city, postcode:client.clientAddress.postcode, country: client.clientAddress.country}
             },
             create: {
-              street: formData.clientStreetAddress,
-              city: formData.clientCity,
-              postcode: formData.clientPostCode,
-              country: formData.clientCountry,
+              street: client.clientAddress.street,
+              city: client.clientAddress.city,
+              postcode: client.clientAddress.postcode,
+              country: client.clientAddress.country,
               }
             }
         }
       }
     })
 
-    if(!client) {return {error: "The client wasn't created"}}
+    if(!newClient) {return {error: "The client and invoice weren't created"}}
 
     const newInvoice = await prisma?.invoice.create({
       data:{
-      paymentDue: paymentData,
-      paymentTerms: formData.paymentTerms,
-      description: formData.description,
-      status:status,
-      total: total,
-      id: id,
+      paymentDue: invoice.paymentDue,
+      paymentTerms: invoice.paymentTerms,
+      description: invoice.description,
+      status:invoice.status,
+      total: invoice.total,
+      id: invoice.id,
       client: {
         connect:{
-            id: client.id
+            id: newClient.id
         }
       },
       senderAddress:{
         connectOrCreate: {
         where:{
-          address: {street: formData.senderStreetAddress, city:formData.senderCity,postcode:formData.senderPostCode,country: formData.senderCountry}
+          address: {street: invoice.senderAddress.street, city:invoice.senderAddress.city, postcode:invoice.senderAddress.postcode, country: invoice.senderAddress.country}
         },
         create: {
-          street: formData.senderStreetAddress,
-          city: formData.senderCity,
-          postcode: formData.senderPostCode,
-          country: formData.senderCountry,
+          street: invoice.senderAddress.street,
+          city: invoice.senderAddress.city,
+          postcode: invoice.senderAddress.postcode,
+          country: invoice.senderAddress.country,
           }
         }
       },

@@ -120,7 +120,7 @@ export async function getInvoiceById (id:string) {
   try {
     const newClient = await prisma.client.upsert ({
       where: {
-        clientEmail: client.clientEmail
+        clientInfo: {clientEmail: client.clientEmail, clientName: client.clientName}
       },
       update: {
         clientName: client.clientName,

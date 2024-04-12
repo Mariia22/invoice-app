@@ -8,7 +8,7 @@ export default function CreatePage() {
         <ButtonBack url="/" />
         <p className="mt-6 font-bold text-2xl">New Invoice</p>
       </div>
-      <FormInvoice isEditing={false}/>
+      <FormInvoice isEditing={false} isModal={false} url={"/"} />
     </>
   )
 }

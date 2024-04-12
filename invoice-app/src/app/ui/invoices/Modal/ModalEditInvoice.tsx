@@ -1,6 +1,6 @@
 "use client";
 
-import { Invoice } from "@/app/lib/types";
+import { Invoice, ModalFormType } from "@/app/lib/types";
 import FormInvoice from "../Form/FormInvoice";
 import IdHeadline from "../../shared/IdHeadline";
 import HeaderContent from "../../shared/HeaderContent";
@@ -22,7 +22,7 @@ export default function ModalEditInvoice({ id, invoice, isEditing }: ModalEditIn
           ? <p className="mt-6 text-2xl font-bold text-headerText dark:text-text md:px-14 md:pt-14 xl:pt-10">Edit <IdHeadline id={id} /></p>
           : <p className="mt-6 font-bold text-2xl md:mt-0 md:px-14 md:pt-14 xl:pt-10">New Invoice</p>
         }
-        <FormInvoice isEditing={isEditing} invoice={invoice} />
+        <FormInvoice isEditing={isEditing} invoice={invoice} isModal={true} />
       </div>
     </div>
   );

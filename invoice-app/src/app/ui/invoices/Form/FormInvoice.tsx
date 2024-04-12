@@ -1,6 +1,6 @@
 'use client'
 
-import { FormInput, Invoice, Status } from "@/app/lib/types"
+import { FormInput, Invoice, ModalFormType, Status } from "@/app/lib/types"
 import { useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
@@ -12,18 +12,27 @@ import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
 import { createNewInvoice } from "@/app/lib/actions"
+import { useContext } from "react"
+import { FormWindow } from "@/app/providers"
+import { useRouter } from "next/navigation"
 
 type FormInvoice = {
   isEditing: boolean;
   invoice?: Invoice;
+  isModal: boolean;
+  url?: string
 }
 
-export default function FormInvoice({ isEditing, invoice }: FormInvoice) {
+export default function FormInvoice({ isEditing, invoice, isModal, url }: FormInvoice) {
+  const router = useRouter()
+  const { setFormModal } = useContext(FormWindow) as ModalFormType;
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
 
   const onMyFormSubmit = async (data: FormInput, status: Status) => {
     await createNewInvoice(data, status);
+    isModal ? setFormModal(false) : router.push(url ? url : "/")
+
   }
 
   function addNewItem() {

@@ -11,7 +11,7 @@ import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
 import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
-import { createNewInvoice } from "@/app/lib/actions"
+import { createNewInvoice, editInvoice } from "@/app/lib/actions"
 import { useContext } from "react"
 import { FormWindow } from "@/app/providers"
 import { useRouter } from "next/navigation"
@@ -20,19 +20,22 @@ type FormInvoice = {
   isEditing: boolean;
   invoice?: Invoice;
   isModal: boolean;
-  url?: string
+  url?: string;
+  id?: string;
 }
 
-export default function FormInvoice({ isEditing, invoice, isModal, url }: FormInvoice) {
+export default function FormInvoice({ isEditing, invoice, isModal, url, id }: FormInvoice) {
   const router = useRouter()
   const { setFormModal } = useContext(FormWindow) as ModalFormType;
   const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
 
   const onMyFormSubmit = async (data: FormInput, event: any) => {
-    await createNewInvoice(data, event.nativeEvent.submitter.name);
-    isModal ? setFormModal(false) : router.push(url ? url : "/")
+    !isEditing
+      ? await createNewInvoice(data, event.nativeEvent.submitter.name)
+      : await editInvoice(data, id)
 
+    isModal ? setFormModal(false) : router.push(url ? url : "/")
   }
 
   function addNewItem() {

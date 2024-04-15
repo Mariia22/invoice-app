@@ -27,3 +27,15 @@ export function generateInvoiceId (length:number):string {
   }
   return id;
 }
+
+export function formatCurrentDate(date:string):Date {
+  return new Date(Date.parse(date));
+}
+
+export function setNewDate(currentDate:Date, days:number):Date {
+  return new Date(currentDate.setDate(currentDate.getDate() + Number(days)));
+}
+
+export function calculateTotal (arr: Array<any>):number {
+ return arr.reduce((acc,item) => acc + item.total, 0)
+}

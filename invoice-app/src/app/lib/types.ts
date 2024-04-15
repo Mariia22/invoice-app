@@ -23,7 +23,17 @@ export type Address = {
   country: string;
 }
 
+export type ItemPrisma = {
+  id: number;
+  name: string;
+  quantity:number;
+  price: number;
+  total: number;
+  invoiceId: string;
+}
+
 export type Item = {
+  id?:number;
   name: string;
   quantity:number;
   price: number;

@@ -118,7 +118,7 @@ export async function getInvoiceById (id:string) {
   noStore ();
   const items = invoiceItems.map((item) =>({name: item.name,quantity: +item.quantity,price: +item.price,total: item.total}))
   try {
-    const newClient = await prisma.client.upsert ({
+    const newClient = await prisma.client.upsert({
       where: {
         clientInfo: {clientEmail: client.clientEmail, clientName: client.clientName}
       },
@@ -181,6 +181,71 @@ export async function getInvoiceById (id:string) {
      if(!newInvoice) {return {error: "The invoice wasn't created"}}
   }
   catch (error) { 
+    console.error('Database Error:', error)
+  }
+ }
+
+ export async function editInvoiceDB (invoice:Omit<Invoice, "item"|"status">, client:Client, invoiceItems:Item[]) {
+  noStore ();
+  try {
+    const updateInvoice = await prisma.invoice.update({
+      where:{ 
+        id: invoice.id
+      },
+      data:{
+        paymentDue: invoice.paymentDue,
+        paymentTerms: invoice.paymentTerms,
+        description: invoice.description,
+        total: invoice.total,
+        client:{
+          update:{
+            clientName: client.clientName,
+            clientEmail: client.clientEmail,
+            clientAddress: {
+              update:{
+                street: client.clientAddress.street,
+                city: client.clientAddress.city,
+                postcode: client.clientAddress.postcode,
+                country: client.clientAddress.country,
+              }
+            }
+          }
+        },
+        senderAddress:{
+          update:{
+            street: invoice.senderAddress.street,
+            city: invoice.senderAddress.city,
+            postcode: invoice.senderAddress.postcode,
+            country: invoice.senderAddress.country
+          }
+        }
+      }
+    })
+    if(!updateInvoice) {return {error: "The invoice wasn't updated"}}
+    for (let item of invoiceItems) {
+      const updateItem = await prisma.item.upsert({
+        where: {
+          id: item.id
+        },
+        update: {
+          name: item.name,
+          quantity: +item.quantity,
+          price: +item.price,
+          total: +item.total
+        },
+        create:{
+          name: item.name,
+          quantity: +item.quantity,
+          price: +item.price,
+          total: +item.total,
+          invoiceId: invoice.id
+        }
+      })
+
+      if(!updateItem) {return {error: "The invoice item wasn't updated"}}
+     }
+
+  } catch (error) {
     console.error('Database Error:', error)
   }
  }

@@ -1,4 +1,3 @@
-
 "use server";
 
 import { revalidatePath } from "next/cache"
@@ -42,11 +41,13 @@ export async function createNewInvoice(data: FormInput, status: Status) {
     }
 
   }
-  await createInvoiceDB(invoice, client, data.items)
+  const result = await createInvoiceDB(invoice, client, data.items)
   revalidatePath(`/`)
+  return result;
 }
 
 export async function editInvoice(data: FormInput, id:string | undefined) {
+  let result;
   if (id) {
   const currentDate = new Date(Date.parse(data.invoiceData));
   const client:Client = {
@@ -81,11 +82,13 @@ export async function editInvoice(data: FormInput, id:string | undefined) {
     }
 
   }
-  await editInvoiceDB(invoice, client, data.items)
+  result = await editInvoiceDB(invoice, client, data.items)
   revalidatePath(`/invoices/${id}`)
 } else {
-  createNewInvoice(data, Status.Draft)
+ result = createNewInvoice(data, Status.Draft)
 }
+
+return result;
 }
 
 export async function setPaidStatusToInvoice(id: string) {

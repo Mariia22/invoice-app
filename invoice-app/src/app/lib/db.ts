@@ -92,7 +92,7 @@ export async function getInvoiceById (id:string) {
         status: Status.Paid
       }
     })
-     if(!updateInvoice) {return {error: "The status wasn't changed"}}
+     if(!updateInvoice) {return {status: "error", error: "The status wasn't changed"}}
   }
   catch (error) { 
     console.error('Database Error:', error)
@@ -107,7 +107,7 @@ export async function getInvoiceById (id:string) {
         id: id
       }
     })
-     if(!deleteInvoice) {return {error: "The invoice wasn't removed"}}
+     if(!deleteInvoice) {return {status: "error", error: "The invoice wasn't removed"}}
   }
   catch (error) { 
     console.error('Database Error:', error)
@@ -145,7 +145,7 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(!newClient) {return {error: "The client and invoice weren't created"}}
+    if(!newClient) {return {status: "error", error: "The client and invoice weren't created"}}
 
     const newInvoice = await prisma?.invoice.create({
       data:{
@@ -178,7 +178,7 @@ export async function getInvoiceById (id:string) {
       }
     }})
 
-     if(!newInvoice) {return {error: "The invoice wasn't created"}}
+     if(!newInvoice) {return {status: "error", error: "The invoice wasn't created"}}
   }
   catch (error) { 
     console.error('Database Error:', error)
@@ -222,7 +222,7 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(!updateInvoice) {return {error: "The invoice wasn't updated"}}
+    if(!updateInvoice) {return {status: "error", error: "The invoice wasn't updated"}}
 
     for (let item of invoiceItems) {
       if(item.id){
@@ -238,8 +238,8 @@ export async function getInvoiceById (id:string) {
           }
         })
 
-        if(!updateItem) {return {error: "The invoice item wasn't updated"}}
-        
+        if(!updateItem) {return {status: "error", error: "The invoice item wasn't updated"}}
+
       } else {
         const newItem = await prisma.item.create({
           data: {
@@ -251,8 +251,13 @@ export async function getInvoiceById (id:string) {
           }
         })
 
-        if(!newItem) {return {error: "The invoice item wasn't created"}}
+        if(!newItem) {return {status: "error", error: "The invoice item wasn't created"}}
       }
+    }
+
+    return {
+      status: "success",
+      message: "The invoice was changed",
     }
 
   } catch (error) {

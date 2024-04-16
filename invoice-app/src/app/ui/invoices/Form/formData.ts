@@ -57,7 +57,7 @@ export const defaultFormValues = (invoice:Invoice | undefined) => {
   clientCity: "",
   clientPostCode: "",
   clientCountry: "",
-  invoiceData: "",
+  invoiceData: new Date().toISOString().substring(0, 10),
   paymentTerms: 1,
   description: "",
   items: []

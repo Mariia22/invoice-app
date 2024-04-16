@@ -19,7 +19,7 @@ export async function getAllInvoices (){
     return data
 
   } catch (error){
-    console.error('Database Error:', error)
+    console.error('Database Error: Failed to Get Invoices') ;
   }
 }
 
@@ -41,9 +41,8 @@ export async function getInvoiceById (id:string) {
     });
 
     return data
-
   } catch (error){
-    console.error('Database Error:', error)
+    console.error('Database Error: Failed to Get Invoice by Id');
   }
 }
  export async function getFilteredInvoices(chosenStatus:string[]){
@@ -77,7 +76,7 @@ export async function getInvoiceById (id:string) {
     return data
 
   } catch (error){
-    console.error('Database Error:', error)
+    console.error('Database Error: Failed to Get Invoices');
   }
  }
 
@@ -92,10 +91,10 @@ export async function getInvoiceById (id:string) {
         status: Status.Paid
       }
     })
-     if(!updateInvoice) {return {status: "error", error: "The status wasn't changed"}}
+     if(!updateInvoice) { throw new Error("The status wasn't changed")}
   }
   catch (error) { 
-    console.error('Database Error:', error)
+    return { message: 'Database Error: Failed to Change status to Paid' };
   }
  }
 
@@ -107,10 +106,10 @@ export async function getInvoiceById (id:string) {
         id: id
       }
     })
-     if(!deleteInvoice) {return {status: "error", error: "The invoice wasn't removed"}}
+     if(!deleteInvoice) {throw new Error("The status wasn't removed")}
   }
   catch (error) { 
-    console.error('Database Error:', error)
+    return { message: 'Database Error: Failed to Delete Invoice' };
   }
  }
 
@@ -145,7 +144,7 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(!newClient) {return {status: "error", error: "The client and invoice weren't created"}}
+    if(!newClient) {throw new Error("The client wasn't created")}
 
     const newInvoice = await prisma?.invoice.create({
       data:{
@@ -178,10 +177,10 @@ export async function getInvoiceById (id:string) {
       }
     }})
 
-     if(!newInvoice) {return {status: "error", error: "The invoice wasn't created"}}
+     if(!newInvoice) {throw new Error("The invoice wasn't created")}
   }
   catch (error) { 
-    console.error('Database Error:', error)
+    return { message: 'Database Error: Failed to Create Invoice' };
   }
  }
 
@@ -222,7 +221,7 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(!updateInvoice) {return {status: "error", error: "The invoice wasn't updated"}}
+    if(updateInvoice) {throw new Error("The invoice wasn't updated")}
 
     for (let item of invoiceItems) {
       if(item.id){
@@ -238,7 +237,7 @@ export async function getInvoiceById (id:string) {
           }
         })
 
-        if(!updateItem) {return {status: "error", error: "The invoice item wasn't updated"}}
+        if(!updateItem) {throw new Error("The item wasn't updated")}
 
       } else {
         const newItem = await prisma.item.create({
@@ -251,7 +250,7 @@ export async function getInvoiceById (id:string) {
           }
         })
 
-        if(!newItem) {return {status: "error", error: "The invoice item wasn't created"}}
+        if(!newItem) {throw new Error("The item wasn't created")}
       }
     }
 
@@ -261,6 +260,6 @@ export async function getInvoiceById (id:string) {
     }
 
   } catch (error) {
-    console.error('Database Error:', error)
+    return { message: 'Database Error: Failed to Update Invoice' };
   }
  }

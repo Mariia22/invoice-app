@@ -12,7 +12,7 @@ import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
 import { createNewInvoice, editInvoice } from "@/app/lib/actions"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { FormWindow } from "@/app/providers"
 import { useRouter } from "next/navigation"
 
@@ -31,13 +31,10 @@ export default function FormInvoice({ isEditing, invoice, isModal, url, id }: Fo
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
 
   const onMyFormSubmit = async (data: FormInput, event: any) => {
-    const result = !isEditing
+    !isEditing
       ? await createNewInvoice(data, event.nativeEvent.submitter.name)
       : await editInvoice(data, id)
-
-    if (result?.status === "success") {
-      isModal ? setFormModal(false) : router.push(url ? url : "/")
-    }
+    isModal ? setFormModal(false) : router.push(url ? url : "/")
   }
 
   function addNewItem() {

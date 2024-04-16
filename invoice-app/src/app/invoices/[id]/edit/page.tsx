@@ -3,12 +3,13 @@ import { Invoice } from "@/app/lib/types";
 import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
 import FormInvoice from "@/app/ui/invoices/Form/FormInvoice";
 import IdHeadline from "@/app/ui/shared/IdHeadline";
+import { notFound } from "next/navigation";
 
 export default async function EditPage({ params }: { params: { id: string } }) {
   const invoice: Invoice | undefined | null = await getInvoiceById(params.id)
 
   if (!invoice) {
-    return (<div>Invoice is not found</div>)
+    notFound();
   }
 
   return (
@@ -17,6 +18,6 @@ export default async function EditPage({ params }: { params: { id: string } }) {
         <ButtonBack url={`/invoices/${params.id}`} />
         <div className="mt-6 text-2xl font-bold text-headerText dark:text-text">Edit <IdHeadline id={params.id} /></div>
       </div>
-      <FormInvoice isEditing={true} invoice={invoice} isModal={true} url={`/invoices/${params.id}`}/>
+      <FormInvoice isEditing={true} invoice={invoice} isModal={true} url={`/invoices/${params.id}`} />
     </>)
 }

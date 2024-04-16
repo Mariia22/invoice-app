@@ -11,7 +11,7 @@ export default function FormPaymentSection({ register, isEditing }: { register: 
       </div>
       <div className="text-left flex flex-col w-full gap-y-2">
         <label className="field-label">Payment Terms</label>
-        <select {...register("paymentTerms")} defaultValue="paymentTerms" className="field">
+        <select {...register("paymentTerms")} defaultValue="paymentTerms" className="selectField">
           {paymentTermsOptions.map(option => (<option key={option.id} value={option.value}>{option.label}</option>))}
         </select>
       </div>

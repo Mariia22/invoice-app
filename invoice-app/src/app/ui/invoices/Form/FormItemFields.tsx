@@ -14,7 +14,7 @@ export default function FormItemFields({ fields, register, errors, remove, setVa
       {
         fields.map((field: Item, index: number) => (
           <Fragment key={index}>
-            <div className="text-left col-span-6 md:col-span-3 w-full">
+            <div className="text-left col-span-7 md:col-span-3 w-full">
               <label className="field-label">Item Name</label>
               <input {...register(`items.${index}.name`, { required: "Name is required" })} type="text" className="field" />
               {errors.items?.[index]?.name && <p>{errors.items?.[index]?.name?.message}</p>}

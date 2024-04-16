@@ -9,9 +9,10 @@ import { ModalFormType } from "@/app/lib/types";
 type ButtonCancelProps = {
   name: string
   url: string
+  isSubmitting: boolean
 }
 
-export default function ButtonCancel({ name, url }: ButtonCancelProps) {
+export default function ButtonCancel({ name, url, isSubmitting }: ButtonCancelProps) {
   const router = useRouter()
   const { isFormOpen, setFormModal } = useContext(FormWindow) as ModalFormType
 
@@ -22,6 +23,7 @@ export default function ButtonCancel({ name, url }: ButtonCancelProps) {
   return (
     <Button
       style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale hover:bg-secondaryPale md:py-4 md:px-6"
+      disabled={isSubmitting}
       onClick={cancel}
       text={name} />
   )

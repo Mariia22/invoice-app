@@ -12,7 +12,7 @@ import FormFields from "./FormFields"
 import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
 import { createNewInvoice, editInvoice } from "@/app/lib/actions"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { FormWindow } from "@/app/providers"
 import { useRouter } from "next/navigation"
 
@@ -27,15 +27,17 @@ type FormInvoice = {
 export default function FormInvoice({ isEditing, invoice, isModal, url, id }: FormInvoice) {
   const router = useRouter()
   const { setFormModal } = useContext(FormWindow) as ModalFormType;
-  const { register, handleSubmit, formState: { errors }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
+  const { register, handleSubmit, formState: { errors, isSubmitting }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
 
   const onMyFormSubmit = async (data: FormInput, event: any) => {
-    !isEditing
+    const result = !isEditing
       ? await createNewInvoice(data, event.nativeEvent.submitter.name)
       : await editInvoice(data, id)
 
-    isModal ? setFormModal(false) : router.push(url ? url : "/")
+    if (result?.status === "success") {
+      isModal ? setFormModal(false) : router.push(url ? url : "/")
+    }
   }
 
   function addNewItem() {
@@ -61,14 +63,14 @@ export default function FormInvoice({ isEditing, invoice, isModal, url, id }: Fo
       <div className="w-full h-[64px] bg-gradient-to-t from-blackShadow dark:bg-none to-text xl:hidden" />
       {isEditing
         ? <div className="w-full flex items-center justify-center bg-text dark:bg-cardColor px-3 py-5 md:justify-end md:pr-14 md:rounded-r-xl xl:py-8">
-          <ButtonCancel url={`/invoices/${invoice?.id}`} name="Cancel" />
-          <ButtonSaveChanges name="Save Changes" />
+          <ButtonCancel url={`/invoices/${invoice?.id}`} name="Cancel" isSubmitting={isSubmitting} />
+          <ButtonSaveChanges name="Save Changes" isSubmitting={isSubmitting} />
         </div>
         : <div className="w-full flex items-center justify-center bg-text dark:bg-cardColor px-3 p-5 md:justify-between xl:py-8">
-          <ButtonCancel url="/" name="Discard" />
+          <ButtonCancel url="/" name="Discard" isSubmitting={isSubmitting} />
           <div className="flex items-center justify-center md:px-14">
-            <ButtonSaveDraft />
-            <ButtonSaveChanges name="Save & Send" />
+            <ButtonSaveDraft isSubmitting={isSubmitting} />
+            <ButtonSaveChanges name="Save & Send" isSubmitting={isSubmitting} />
           </div>
         </div>}
       <div className="hidden md:block w-full h-[80px] bg-text dark:bg-cardColor xl:hidden" />

@@ -16,6 +16,7 @@ import ButtonEditModalWindow from "@/app/ui/invoices/Buttons/ButtonEditModalWind
 import ModalEditInvoice from "@/app/ui/invoices/Modal/ModalEditInvoice";
 import PortalFormWrapper from "@/app/ui/invoices/Modal/PortalFormWrapper";
 import { deleteInvoice, setPaidStatusToInvoice } from "@/app/lib/actions";
+import { notFound } from "next/navigation";
 
 export default async function InvoicePage({ params }: { params: { id: string } }) {
   const invoice = await getInvoiceById(params.id)
@@ -23,7 +24,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
   const handleDeleteInvoiceWithId = deleteInvoice.bind(null, params.id);
 
   if (!invoice) {
-    return (<div>Invoice is not found</div>)
+    notFound();
   }
 
   return (
@@ -37,7 +38,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
               <InvoiceStatus status={Status[invoice.status]} withArrow={false} />
             </div>
             <div className="hidden md:flex md:h-12">
-              <ButtonEditModalWindow />
+              <ButtonEditModalWindow isDisabled={Status[invoice.status] === Status.Paid ? true : false} />
               <ButtonDelete />
               <ButtonPaid disabled={Status[invoice.status] === Status.Paid} handleClick={handleClickPaidButtonWithId} />
             </div>

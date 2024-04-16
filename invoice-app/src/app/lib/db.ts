@@ -221,29 +221,39 @@ export async function getInvoiceById (id:string) {
         }
       }
     })
-    if(!updateInvoice) {return {error: "The invoice wasn't updated"}}
-    for (let item of invoiceItems) {
-      const updateItem = await prisma.item.upsert({
-        where: {
-          id: item.id
-        },
-        update: {
-          name: item.name,
-          quantity: +item.quantity,
-          price: +item.price,
-          total: +item.total
-        },
-        create:{
-          name: item.name,
-          quantity: +item.quantity,
-          price: +item.price,
-          total: +item.total,
-          invoiceId: invoice.id
-        }
-      })
 
-      if(!updateItem) {return {error: "The invoice item wasn't updated"}}
-     }
+    if(!updateInvoice) {return {error: "The invoice wasn't updated"}}
+
+    for (let item of invoiceItems) {
+      if(item.id){
+        const updateItem = await prisma.item.update({
+          where: {
+            id: item.id
+          },
+          data: {
+            name: item.name,
+            quantity: +item.quantity,
+            price: +item.price,
+            total: +item.total
+          }
+        })
+
+        if(!updateItem) {return {error: "The invoice item wasn't updated"}}
+        
+      } else {
+        const newItem = await prisma.item.create({
+          data: {
+            name: item.name,
+            quantity: +item.quantity,
+            price: +item.price,
+            total: +item.total,
+            invoiceId: invoice.id
+          }
+        })
+
+        if(!newItem) {return {error: "The invoice item wasn't created"}}
+      }
+    }
 
   } catch (error) {
     console.error('Database Error:', error)

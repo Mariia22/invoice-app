@@ -38,7 +38,7 @@ export default function InvoiceFilter({ statuses }: { statuses: string[] }) {
     setDelayHandler(
       window.setTimeout(() => {
         setFilterOpened(false)
-      }, 500)
+      }, 1500)
     )
   }
 

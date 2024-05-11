@@ -92,11 +92,19 @@ return result;
 }
 
 export async function setPaidStatusToInvoice(id: string) {
+  try{
   await setInvoiceStatusToPaidDB(id)
   revalidatePath(`/invoices/${id}`)
+} catch (error) {
+  console.log(error)
+}
 }
 
 export async function deleteInvoice(id: string) {
+  try{
   await deleteInvoiceDB (id)
   revalidatePath(`/`)
+  } catch (error) {
+    console.log(error)
+  }
 }

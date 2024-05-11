@@ -6,7 +6,7 @@ export default function InvoiceCard({ id, clientName, paymentDue, total, status 
   return (
     <Link
       href={`/invoices/${id}`}
-      className="grid grid-cols-2 md:items-center mb-4 px-6 py-6 bg-text rounded-lg shadow-modal dark:bg-cardColor dark:text-text md:grid-cols-6 md:grid-rows-1 md:py-4">
+      className="grid grid-cols-2 md:items-center mb-4 px-6 py-6 bg-text rounded-lg shadow-modal dark:bg-cardColor dark:text-text hover:opacity-60 md:grid-cols-6 md:grid-rows-1 md:py-4">
       <div className="grid grid-cols-1 justify-between place-items-start md:grid-cols-2 md:col-span-2 md:items-center">
         <p className="font-bold text-base">
           <span className="text-secondary">#</span>

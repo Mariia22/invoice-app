@@ -3,7 +3,7 @@
 import { ModalType } from "@/app/lib/types";
 import { ModalWindow } from "@/app/providers";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext} from "react";
 
 type ModalDeleteInvoiceProps = {
   id: string
@@ -15,9 +15,11 @@ export default function ModalDeleteInvoice({ id, handleClick }: ModalDeleteInvoi
   const router = useRouter();
 
   async function deleteInvoice() {
-    await handleClick()
-    setOpenModal(false)
-    router.push(`/`)
+      handleClick()
+      .then(()=>  router.push(`/`))
+      .catch(error => console.log(error))
+      .finally(()=>  setOpenModal(false))
+
   }
 
   function cancelDeletionInvoice() {
@@ -29,8 +31,8 @@ export default function ModalDeleteInvoice({ id, handleClick }: ModalDeleteInvoi
       <h3 className="mb-2 font-bold text-2xl dark:text-text md:mb-3">Confirm Deletion</h3>
       <p className="text-secondaryDark text-sm">Are you sure you want to delete invoice #{id}? This action cannot be undone.</p>
       <form action={deleteInvoice} className="flex self-end gap-2 mt-5">
-        <button type="button" className="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale py-3 px-5 rounded-3xl" onClick={cancelDeletionInvoice}>Cancel</button>
-        <button type="submit" className="bg-contrast text-text py-3 px-5 rounded-3xl">Delete</button>
+        <button type="button" className="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale py-3 px-5 rounded-3xl hover:opacity-60" onClick={cancelDeletionInvoice}>Cancel</button>
+        <button type="submit" className="bg-contrast text-text py-3 px-5 rounded-3xl hover:opacity-60">Delete</button>
       </form>
     </div >
   );

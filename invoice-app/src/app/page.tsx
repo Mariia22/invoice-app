@@ -32,7 +32,7 @@ export default async function Invoices({ searchParams }: { searchParams: { [key:
 
   return (
     <div className="py-8 px-6 text-darkText dark:text-background md:py-14">
-      <div className="flex items-center justify-between pb-8">
+      <div className="flex items-center justify-between pb-10">
         <div>
           <h1 className="text-2xl font-bold text-headerText dark:text-text">Invoices</h1>
           <p className="text-secondaryDark md:hidden">{numberOfInvoices > 0 ? numberOfInvoices : "No"} invoices</p>

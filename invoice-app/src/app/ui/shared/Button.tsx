@@ -10,5 +10,5 @@ type ButtonProps = {
 }
 
 export default function Button({ text, style, name, onClick, type, disabled }: ButtonProps) {
-  return (<button type={type || "button"} name={name} className={`${style} text-sm py-3 px-4 mx-2 rounded-3xl font-bold disabled:opacity-50 disabled:pointer-events-none`} onClick={onClick} disabled={disabled || false}>{text}</button>)
+  return (<button type={type || "button"} name={name} className={`${style} text-sm py-3 px-4 mx-2 rounded-3xl font-bold disabled:opacity-50 disabled:pointer-events-none hover:opacity-60`} onClick={onClick} disabled={disabled || false}>{text}</button>)
 }

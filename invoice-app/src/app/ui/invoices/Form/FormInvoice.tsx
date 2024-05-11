@@ -15,6 +15,8 @@ import { createNewInvoice, editInvoice } from "@/app/lib/actions"
 import { useContext } from "react"
 import { FormWindow } from "@/app/providers"
 import { useRouter } from "next/navigation"
+import { invoiceFormType, invoiceFormSchema } from "./formValidation"
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormInvoice = {
   isEditing: boolean;
@@ -22,12 +24,13 @@ type FormInvoice = {
   isModal: boolean;
   url?: string;
   id?: string;
+  onSubmit: (data: invoiceFormType, event:SubmitEvent) => void;
 }
 
 export default function FormInvoice({ isEditing, invoice, isModal, url, id }: FormInvoice) {
   const router = useRouter()
   const { setFormModal } = useContext(FormWindow) as ModalFormType;
-  const { register, handleSubmit, formState: { errors, isSubmitting }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice) })
+  const { register, handleSubmit, formState: { errors, isSubmitting }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice), resolver: zodResolver(invoiceFormSchema) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
 
   const onMyFormSubmit = async (data: FormInput, event: any) => {

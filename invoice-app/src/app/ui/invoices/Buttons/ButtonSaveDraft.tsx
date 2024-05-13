@@ -1,11 +1,21 @@
 "use client"
 
-import { Status } from "@/app/lib/types"
+import { FormInput, Status } from "@/app/lib/types"
 import Button from "../../shared/Button"
 import { useState } from "react";
 
-export default function ButtonSaveDraft({ isSubmitting }: { isSubmitting: boolean }) {
+type ButtonProps = {
+  isSubmitting: boolean,
+  onClick: () => void
+}
+
+export default function ButtonSaveDraft({ isSubmitting, onClick }: ButtonProps) {
   const [isClicking, setIsClicking] = useState(false);
+
+  function handleClick(){
+    setIsClicking(true)
+    onClick()
+  }
 
   return (
     <Button
@@ -14,6 +24,6 @@ export default function ButtonSaveDraft({ isSubmitting }: { isSubmitting: boolea
       name={Status.Draft}
       style="bg-draftColor text-secondaryDark"
       text={isSubmitting && isClicking ? "Submitting" : "Save as Draft"}
-      onClick={() => { setIsClicking(true) }} />
+      onClick={handleClick} />
   )
 }

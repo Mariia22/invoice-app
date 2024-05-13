@@ -1,6 +1,6 @@
 'use client'
 
-import { FormInput, Invoice, ModalFormType } from "@/app/lib/types"
+import { FormInput, Invoice, ModalFormType, Status } from "@/app/lib/types"
 import { useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
@@ -29,11 +29,19 @@ type FormInvoice = {
 export default function FormInvoice({ isEditing, invoice, isModal, url, id }: FormInvoice) {
   const router = useRouter()
   const { setFormModal } = useContext(FormWindow) as ModalFormType;
-  const { register, handleSubmit, formState: { errors, isSubmitting }, control, setValue, getValues } = useForm<FormInput>({ defaultValues: defaultFormValues(invoice), resolver: zodResolver(invoiceFormSchema) })
+  const { register, handleSubmit, formState: { errors, isSubmitting }, control, setValue, getValues } = useForm<FormInput>({ 
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
+    defaultValues: defaultFormValues(invoice), 
+    resolver: zodResolver(invoiceFormSchema) })
   const { fields, append, remove } = useFieldArray({ control, name: "items" });
-  const [error, setError] = useState<null|string>(null)
+  const [error, setError] = useState<null | string>(null)
 
-  const onMyFormSubmit = async (data: FormInput, event:any) => {
+  function closeForm () {
+    isModal ? setFormModal(false) : router.push(url ? url : "/")
+  }
+
+async function onMyFormSubmit(data: FormInput, event:any) {
     if(data.items.length <= 0){
       setError("Please, add items to the invoice")
     } else {
@@ -42,7 +50,7 @@ export default function FormInvoice({ isEditing, invoice, isModal, url, id }: Fo
     !isEditing
       ? await createNewInvoice(data, event.nativeEvent.submitter.name)
       : await editInvoice(data, id)
-    isModal ? setFormModal(false) : router.push(url ? url : "/")
+      closeForm()
     } catch (error:any){
       console.log(error)
     }
@@ -52,6 +60,15 @@ export default function FormInvoice({ isEditing, invoice, isModal, url, id }: Fo
   function addNewItem() {
     setError(null)
     append({ name: "", quantity: 0, price: 0, total: 0 })
+  }
+
+  async function saveDraft() {
+    try {
+      createNewInvoice(getValues(), Status.Draft)
+      closeForm()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -80,8 +97,8 @@ export default function FormInvoice({ isEditing, invoice, isModal, url, id }: Fo
         : <div className="w-full flex items-center justify-center bg-text dark:bg-cardColor px-3 p-5 md:justify-between xl:py-8">
           <ButtonCancel url="/" name="Discard" isSubmitting={isSubmitting} />
           <div className="flex items-center justify-center md:px-14">
-            <ButtonSaveDraft isSubmitting={isSubmitting} />
-            <ButtonSaveChanges name="Save & Send" isSubmitting={isSubmitting} />
+            <ButtonSaveDraft isSubmitting={isSubmitting} onClick={saveDraft}/>
+            <ButtonSaveChanges name="Save & Send" isSubmitting={isSubmitting}/>
           </div>
         </div>}
       <div className="hidden md:block w-full h-[80px] bg-text dark:bg-cardColor xl:hidden" />

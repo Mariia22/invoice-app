@@ -1,19 +1,27 @@
 import { z } from "zod";
 
+const ItemSchema = z.object({
+  name: z.string().min(5, {message:"Must be 5 or more characters long"}),
+    quantity: z.number(),
+    price: z.number(),
+    total: z.number(),
+}).strict();
+
 export const invoiceFormSchema = z.object({
   senderStreetAddress: z.string().min(5, {message:"Must be 5 or more characters long"}),
   senderCity: z.string().min(5, {message:"Must be 5 or more characters long"}),
-  senderPostCode: z.string().min(5, {message:"Must be 5 or more characters long"}),
+  senderPostCode: z.string().regex(/^\d{2}-\d{3}$/, {message:"The postcode's format is XX-XXX"}),
   senderCountry: z.string().min(5, {message:"Must be 5 or more characters long"}),
   clientName: z.string().min(5, {message:"Must be 5 or more characters long"}),
-  clientEmail: z.string().min(5, {message:"Must be 5 or more characters long"}),
+  clientEmail: z.string().email({ message: "Invalid email address" }),
   clientStreetAddress: z.string().min(5, {message:"Must be 5 or more characters long"}),
   clientCity: z.string().min(5, {message:"Must be 5 or more characters long"}),
-  clientPostCode: z.string().min(5, {message:"Must be 5 or more characters long"}),
-  clientCountry: z.string().min(5, {message:"Must be 5 or more characters long"}),
-  invoiceData: z.string().min(5, {message:"Must be 5 or more characters long"}),
-  paymentTerms: z.number(),
+  clientPostCode: z.string().regex(/^\d{2}-\d{3}$/, {message:"The postcode's format is XX-XXX"}),
+  clientCountry: z.string().min(2, {message:"Must be 2 or more characters long"}),
+  invoiceData: z.string(),
+  paymentTerms: z.number().positive(),
   description: z.string().min(5, {message:"Must be 5 or more characters long"}),
+  items: ItemSchema.array()
 });
 
 export type invoiceFormType = z.infer<typeof invoiceFormSchema>;

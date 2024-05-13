@@ -1,8 +1,8 @@
 import { FormInput } from "@/app/lib/types";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { paymentTermsOptions } from "./formData";
 
-export default function FormPaymentSection({ register, isEditing }: { register: UseFormRegister<FormInput>, isEditing: boolean }) {
+export default function FormPaymentSection({ register, isEditing, errors }: { register: UseFormRegister<FormInput>, isEditing: boolean, errors: FieldErrors<FormInput>  }) {
   return (
     <section className="flex flex-col mt-10 px-6 w-full gap-y-6 md:px-14 xl:grid xl:grid-cols-2 xl:gap-x-6">
       <div className="text-left flex flex-col w-full gap-y-2">
@@ -18,6 +18,7 @@ export default function FormPaymentSection({ register, isEditing }: { register: 
       <div className="text-left flex flex-col w-full gap-y-2 xl:col-span-2">
         <label className="field-label">Project Description</label>
         <input {...register("description", { required: `The field is required` })} className="field" type="text" />
+        <p className="text-contrast">{errors["description"]?.message}</p>
       </div>
     </section>
   )

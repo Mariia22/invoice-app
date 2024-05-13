@@ -2,9 +2,9 @@ import { z } from "zod";
 
 const ItemSchema = z.object({
   name: z.string().min(5, {message:"Must be 5 or more characters long"}),
-    quantity: z.number(),
-    price: z.number(),
-    total: z.number(),
+    quantity: z.string().regex(/^\d+$/, {message:"The quantity must be a number"}),
+    price: z.string().regex(/^\d+$/, {message:"The quantity must be a number"}),
+    total: z.string().regex(/^\d+$/, {message:"The quantity must be a number"}),
 }).strict();
 
 export const invoiceFormSchema = z.object({

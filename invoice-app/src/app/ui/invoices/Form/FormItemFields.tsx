@@ -3,8 +3,7 @@ import { Fragment } from "react";
 import { FieldArrayWithId, FieldErrors, UseFieldArrayRemove, UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 export default function FormItemFields({ fields, register, errors, remove, setValue, getValues }: { fields: FieldArrayWithId<FormInput, "items", "id">[], register: UseFormRegister<FormInput>, errors: FieldErrors<FormInput>, remove: UseFieldArrayRemove, setValue: UseFormSetValue<FormInput>, getValues: UseFormGetValues<FormInput> }) {
-
-  const setTotal = (index: number, quantity: string, price: number) => {
+  const setTotal = (index: number, quantity: string, price: number | string) => {
     const amount = Number(Number(quantity) * Number(price));
     if(isNaN(amount)) {
       setValue(`items.${index}.total`, 0);

@@ -1,5 +1,5 @@
 import { formatDate } from '@/app/lib/functions';
-import { FormField, Invoice } from "@/app/lib/types";
+import { FormField, Invoice, Item, ItemPrisma } from "@/app/lib/types";
 
 export const newInvoice = {
   id: "",
@@ -43,7 +43,16 @@ export const defaultFormValues = (invoice:Invoice | undefined) => {
       invoiceData: formatDate(invoice.createdAt),
       paymentTerms: invoice.paymentTerms,
       description: invoice.description,
-      items: invoice.item
+      items: invoice.item.map((item) => {
+        const newItem: Item =  {
+          id: item.id,
+          quantity: item.quantity.toString(),
+          price: item.price.toString(),
+          total: item.total,
+          name: item.name,
+        }
+        return newItem
+      })
       }
   } else {
   return {

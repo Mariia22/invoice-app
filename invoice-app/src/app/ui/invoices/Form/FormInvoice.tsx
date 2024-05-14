@@ -1,7 +1,7 @@
 'use client'
 
 import { FormInput, Invoice, ModalFormType, Status } from "@/app/lib/types"
-import { useFieldArray, useForm } from "react-hook-form"
+import { FieldErrors, useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
 import FormHeader from "./FormHeader"
@@ -41,17 +41,17 @@ export default function FormInvoice({ isEditing, invoice, isModal, url, id }: Fo
     isModal ? setFormModal(false) : router.push(url ? url : "/")
   }
 
-async function onMyFormSubmit(data: FormInput, event:any) {
+async function onMyFormSubmit(data: FormInput) {
     if(data.items.length <= 0){
       setError("Please, add items to the invoice")
     } else {
     setError(null)
     try{
     !isEditing
-      ? await createNewInvoice(data, event.nativeEvent.submitter.name)
+      ? await createNewInvoice(data, Status.Pending)
       : await editInvoice(data, id)
       closeForm()
-    } catch (error:any){
+    } catch (error) {
       console.log(error)
     }
   }
@@ -71,8 +71,10 @@ async function onMyFormSubmit(data: FormInput, event:any) {
     }
   }
 
+ function onInvalid (errors:FieldErrors) {console.error(errors)}
+
   return (
-    <form className="flex flex-col justify-start items-center w-full m-auto bg-text dark:bg-darkText md:m-0" onSubmit={handleSubmit((data, event) => onMyFormSubmit(data, event))}>
+    <form className="flex flex-col justify-start items-center w-full m-auto bg-text dark:bg-darkText md:m-0" onSubmit={handleSubmit((data) => onMyFormSubmit(data), onInvalid)}>
       <FormSection marginTop={6}>
         <FormHeader header="Bill From" />
         <FormFields data={billFromData} register={register} errors={errors} />

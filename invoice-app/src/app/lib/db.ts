@@ -184,7 +184,7 @@ export async function getInvoiceById (id:string) {
   }
  }
 
- export async function editInvoiceDB (invoice:Omit<Invoice, "item"|"status">, client:Client, invoiceItems:Item[]) {
+ export async function editInvoiceDB (invoice:Omit<Invoice, "item">, client:Client, invoiceItems:Item[]) {
   noStore ();
   try {
     const updateInvoice = await prisma.invoice.update({
@@ -195,6 +195,7 @@ export async function getInvoiceById (id:string) {
         paymentDue: invoice.paymentDue,
         paymentTerms: invoice.paymentTerms,
         description: invoice.description,
+        status: invoice.status,
         total: invoice.total,
         client:{
           update:{

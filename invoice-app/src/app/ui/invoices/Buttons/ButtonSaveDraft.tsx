@@ -19,7 +19,7 @@ export default function ButtonSaveDraft({ isSubmitting, onClick }: ButtonProps) 
 
   return (
     <Button
-      type="submit"
+      type="button"
       disabled={isSubmitting}
       name={Status.Draft}
       style="bg-draftColor text-secondaryDark"

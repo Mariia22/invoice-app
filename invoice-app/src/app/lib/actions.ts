@@ -63,10 +63,11 @@ export async function editInvoice(data: FormInput, id:string | undefined) {
       country: data.clientCountry
     }
   }
-  const invoice:Omit<Invoice, "item" | "status"> = {
+  const invoice:Omit<Invoice, "item"> = {
     id: id,
     createdAt: formatCurrentDate(data.invoiceData),
     description: data.description, 
+    status: Status.Pending,
     paymentDue: setNewDate(currentDate,Number(data.paymentTerms)),
     paymentTerms: Number(data.paymentTerms),
     clientId: 0,
@@ -85,7 +86,7 @@ export async function editInvoice(data: FormInput, id:string | undefined) {
   result = await editInvoiceDB(invoice, client, data.items)
   revalidatePath(`/invoices/${id}`)
 } else {
- result = createNewInvoice(data, Status.Draft)
+ result = createNewInvoice(data, Status.Pending)
 }
 
 return result;

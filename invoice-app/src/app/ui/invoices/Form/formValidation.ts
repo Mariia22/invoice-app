@@ -4,7 +4,7 @@ const ItemSchema = z.object({
   name: z.string().min(5, {message:"Must be 5 or more characters long"}),
     quantity: z.string().regex(/^\d+$/, {message:"The quantity must be a number"}),
     price: z.string().regex(/^\d+$/, {message:"The quantity must be a number"}),
-    total: z.string().regex(/^\d+$/, {message:"The quantity must be a number"}),
+    total: z.number(),
 }).strict();
 
 export const invoiceFormSchema = z.object({

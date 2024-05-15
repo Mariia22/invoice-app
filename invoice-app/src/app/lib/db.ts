@@ -45,6 +45,7 @@ export async function getInvoiceById (id:string) {
     console.error('Database Error: Failed to Get Invoice by Id');
   }
 }
+
  export async function getFilteredInvoices(chosenStatus:string[]){
   noStore ();
   const search:Status[] = [];
@@ -223,24 +224,16 @@ export async function getInvoiceById (id:string) {
     })
 
     if(!updateInvoice) {throw new Error("The invoice wasn't updated")}
-  
+    if(invoiceItems.length > 0){
+      const updateInvoiceItems =  await prisma?.item.deleteMany({
+        where:{ 
+          invoiceId: invoice.id
+        }
+      })
+      
+    if(!updateInvoiceItems) {throw new Error("The items weren't updated")}
+
     for (let item of invoiceItems) {
-      if(item.key){
-        const updateItem = await prisma.item.update({
-          where: {
-            id: Number(item.key)
-          },
-          data: {
-            name: item.name,
-            quantity: +item.quantity,
-            price: +item.price,
-            total: +item.total
-          }
-        })
-
-        if(!updateItem) {throw new Error("The item wasn't updated")}
-
-      } else {
         const newItem = await prisma.item.create({
           data: {
             name: item.name,
@@ -250,8 +243,7 @@ export async function getInvoiceById (id:string) {
             invoiceId: invoice.id
           }
         })
-
-        if(!newItem) {throw new Error("The item wasn't created")}
+          if(!newItem) {throw new Error("The item wasn't created")}
       }
     }
 

@@ -84,11 +84,10 @@ export async function editInvoice(data: FormInput, id:string | undefined) {
 
   }
   result = await editInvoiceDB(invoice, client, data.items)
-  revalidatePath(`/invoices/${id}`)
 } else {
  result = createNewInvoice(data, Status.Pending)
 }
-
+revalidatePath(`/invoices/${id}`)
 return result;
 }
 

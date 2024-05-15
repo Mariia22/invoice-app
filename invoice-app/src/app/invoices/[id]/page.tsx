@@ -40,7 +40,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
             <div className="hidden md:flex md:h-12">
               <ButtonEditModalWindow isDisabled={Status[invoice.status] === Status.Paid ? true : false} />
               <ButtonDelete />
-              <ButtonPaid disabled={Status[invoice.status] === Status.Paid} handleClick={handleClickPaidButtonWithId} />
+              <ButtonPaid disabled={Status[invoice.status] !== Status.Pending} handleClick={handleClickPaidButtonWithId} />
             </div>
           </div>
           <div className="flex flex-col justify-between w-full p-6 mb-14 bg-text dark:bg-cardColor text-sm text-secondary dark:text-secondaryPale rounded-md shadow-modal md:p-8">

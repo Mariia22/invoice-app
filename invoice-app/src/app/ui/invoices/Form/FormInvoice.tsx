@@ -61,7 +61,6 @@ async function onMyFormSubmit(data: FormInput) {
 
   function addNewItem() {
     setError(null)
-    const id = useId()
     append({name: "", quantity: 0, price: 0, total: 0 })
   }
 

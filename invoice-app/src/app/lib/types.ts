@@ -33,7 +33,7 @@ export type ItemPrisma = {
 }
 
 export type Item = {
-  id?:number;
+  key?:string;
   name: string;
   quantity:number | string;
   price: number | string;
@@ -77,14 +77,6 @@ export type FormField = {
   gridCols: number
   gridTabletCols: number
 }
-
-type DeepKeys<T> = T extends object
-  ? {
-      [K in keyof T]-?: K extends string | number
-        ? `${K}` | `${K}.${DeepKeys<T[K]>}`
-        : never;
-    }[keyof T]
-  : never;
 
   export type FilterCheckbox = {
     draft:boolean;

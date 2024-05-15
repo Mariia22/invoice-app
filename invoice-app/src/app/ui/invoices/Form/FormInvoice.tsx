@@ -1,6 +1,6 @@
 'use client'
 
-import { FormInput, Invoice, ModalFormType, Status } from "@/app/lib/types"
+import { FormInput, Invoice, Item, ModalFormType, Status } from "@/app/lib/types"
 import { FieldErrors, useFieldArray, useForm } from "react-hook-form"
 import { billFromData, billToData, defaultFormValues } from "./formData"
 import FormSection from "./FormSection"
@@ -9,10 +9,9 @@ import ButtonCancel from "../Buttons/ButtonCancel"
 import ButtonSaveChanges from "../Buttons/ButtonSaveChanges"
 import ButtonSaveDraft from "../Buttons/ButtonSaveDraft"
 import FormFields from "./FormFields"
-import FormItemFields from "./FormItemFields"
 import FormPaymentSection from "./FormPaymentSection"
 import { createNewInvoice, editInvoice } from "@/app/lib/actions"
-import { useContext, useState } from "react"
+import { Fragment, useContext, useId, useState } from "react"
 import { FormWindow } from "@/app/providers"
 import { useRouter } from "next/navigation"
 import { invoiceFormSchema } from "./formValidation"
@@ -47,9 +46,12 @@ async function onMyFormSubmit(data: FormInput) {
     } else {
     setError(null)
     try{
-    !isEditing
-      ? await createNewInvoice(data, Status.Pending)
-      : await editInvoice(data, id)
+     
+    if(isEditing) {
+      await editInvoice(data, id)
+    } else {
+      await createNewInvoice(data, Status.Pending)
+    }
       closeForm()
     } catch (error) {
       console.log(error)
@@ -59,7 +61,8 @@ async function onMyFormSubmit(data: FormInput) {
 
   function addNewItem() {
     setError(null)
-    append({ name: "", quantity: 0, price: 0, total: 0 })
+    const id = useId()
+    append({name: "", quantity: 0, price: 0, total: 0 })
   }
 
   async function saveDraft() {
@@ -72,6 +75,15 @@ async function onMyFormSubmit(data: FormInput) {
   }
 
  function onInvalid (errors:FieldErrors) {console.error(errors)}
+
+ function setTotal (index: number, quantity: string, price: number | string) {
+  const amount = Number(Number(quantity) * Number(price));
+  if(isNaN(amount)) {
+    setValue(`items.${index}.total`, 0);
+  } else {
+  setValue(`items.${index}.total`, Number(amount.toFixed(2)));
+  }
+};
 
   return (
     <form className="flex flex-col justify-start items-center w-full m-auto bg-text dark:bg-darkText md:m-0" onSubmit={handleSubmit((data) => onMyFormSubmit(data), onInvalid)}>
@@ -86,7 +98,31 @@ async function onMyFormSubmit(data: FormInput) {
       <FormPaymentSection register={register} isEditing={isEditing} errors={errors}/>
       <div className="grid grid-cols-7 col-span-3 gap-4 mt-16 px-6 w-full md:px-8 md:grid-cols-10 xl:px-14">
         <h3 className="font-bold text-lg text-secondaryDark col-span-6 justify-self-start md:col-span-10">Item List</h3>
-        <FormItemFields fields={fields} getValues={getValues} register={register} errors={errors} remove={remove} setValue={setValue} />
+        {fields.map((field: Item, index: number) => (
+          <Fragment key={field.key}>
+            <div className="text-left col-span-7 md:col-span-3 w-full">
+              <label className="field-label">Item Name</label>
+              <input {...register(`items.${index}.name`, { required: "Name is required" })} type="text" className="field" />
+              {errors.items?.[index]?.name && <p className="text-contrast">{errors.items?.[index]?.name?.message}</p>}
+            </div>
+            <div className="text-left col-span-2">
+              <label className="field-label">Qty.</label>
+              <input {...register(`items.${index}.quantity`, { required: "Quantity is required" })} type="number" step="1" min="1" className="field" onChange={(e) => { setTotal(index, e.target.value, getValues(`items.${index}.price`)) }} />
+              {errors.items?.[index]?.quantity && <p className="text-contrast">{errors.items?.[index]?.quantity?.message}</p>}
+            </div>
+            <div className="text-left gap-4 w-full col-span-2">
+              <label className="field-label">Price</label>
+              <input {...register(`items.${index}.price`, { min: 0.01 })} type="number" className="field" onChange={(e) => { setTotal(index, e.target.value, getValues(`items.${index}.quantity`)) }} />
+              {errors.items?.[index]?.price && <p className="text-contrast">{errors.items?.[index]?.price?.message}</p>}
+            </div>
+            <div className="text-left gap-4 w-full col-span-2">
+              <label className="field-label">Total</label>
+              <input {...register(`items.${index}.total`, { min: 0.01 })} type="text" disabled className="text-headerText dark:disabled:text-secondaryDark dark:disabled:bg-black text-sm font-bold max-w-full w-full outline-none rounded m-0 py-3 pl-4" />
+            </div>
+            <button type="button" className="w-[13px] h-4 col-span-1 bg-delete-button justify-self-end self-center mt-4" onClick={() => remove(index)} />
+          </Fragment>
+        ))
+      }
         <button type="button" className="text-base bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryDark w-full h-[48px] rounded-3xl mt-12 mb-[88px] place-self-center col-span-6 md:col-span-10 md:mb-12" onClick={addNewItem}>+ Add New Item</button>
       </div >
       {error && <p className="text-contrast">{error}</p>}

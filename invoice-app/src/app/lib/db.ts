@@ -222,13 +222,13 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(updateInvoice) {throw new Error("The invoice wasn't updated")}
-
+    if(!updateInvoice) {throw new Error("The invoice wasn't updated")}
+  
     for (let item of invoiceItems) {
-      if(item.id){
+      if(item.key){
         const updateItem = await prisma.item.update({
           where: {
-            id: item.id
+            id: Number(item.key)
           },
           data: {
             name: item.name,

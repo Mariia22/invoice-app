@@ -1,5 +1,6 @@
 'use client';
 
+import { errorMessage } from '@/app/lib/const';
 import { useEffect } from 'react'
 
 export default function Error({
@@ -15,9 +16,9 @@ export default function Error({
 
   return (
     <div>
-      <h2>Something went wrong!</h2>
+      <h2>{errorMessage.errorMessage}</h2>
       <button onClick={() => reset()}>
-        Try again
+        {errorMessage.tryAgain}
       </button>
     </div>
   )

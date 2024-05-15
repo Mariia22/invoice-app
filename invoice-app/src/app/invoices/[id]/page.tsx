@@ -17,6 +17,7 @@ import ModalEditInvoice from "@/app/ui/invoices/Modal/ModalEditInvoice";
 import PortalFormWrapper from "@/app/ui/invoices/Modal/PortalFormWrapper";
 import { deleteInvoice, setPaidStatusToInvoice } from "@/app/lib/actions";
 import { notFound } from "next/navigation";
+import { textAndHeaders } from "@/app/lib/const";
 
 export default async function InvoicePage({ params }: { params: { id: string } }) {
   const invoice = await getInvoiceById(params.id)
@@ -34,7 +35,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
         <>
           <div className="flex items-center justify-between w-full px-6 py-6 mt-8 mb-4 bg-text dark:bg-cardColor rounded-md shadow-modal">
             <div className="flex items-center justify-between w-full md:justify-start md:w-fit md:gap-5">
-              <p>Status</p>
+              <p>{textAndHeaders.status}</p>
               <InvoiceStatus status={Status[invoice.status]} withArrow={false} />
             </div>
             <div className="hidden md:flex md:h-12">
@@ -63,12 +64,12 @@ export default async function InvoicePage({ params }: { params: { id: string } }
                 <Subtitle subtitle="Payment Due" />
                 <SubtitleBold subtitle={formatDate(invoice.paymentDue)} />
                 <div className="md:hidden">
-                  <Subtitle subtitle="Sent to" />
+                  <Subtitle subtitle={textAndHeaders.sent} />
                   <SubtitleBold subtitle={invoice.client.clientEmail} />
                 </div>
               </div>
               <div className="flex flex-col">
-                <Subtitle subtitle="Bill To" />
+                <Subtitle subtitle={textAndHeaders.bill} />
                 <SubtitleBold subtitle={invoice.client.clientName} />
                 <p className="mt-2">{invoice.client.clientAddress.street}</p>
                 <p>{invoice.client.clientAddress.city}</p>
@@ -76,7 +77,7 @@ export default async function InvoicePage({ params }: { params: { id: string } }
                 <p>{invoice.client.clientAddress.country}</p>
               </div>
               <div className="hidden md:block">
-                <Subtitle subtitle="Sent to" />
+                <Subtitle subtitle={textAndHeaders.sent} />
                 <SubtitleBold subtitle={invoice.client.clientEmail} />
               </div>
             </div>
@@ -92,11 +93,10 @@ export default async function InvoicePage({ params }: { params: { id: string } }
               )))}
             </div>
             <div className="flex items-center justify-between bg-draftColor dark:bg-headerText text-text px-6 py-6 rounded-bl-lg rounded-br-lg">
-              <div className="md:hidden">Grand Total</div>
-              <div className="hidden md:inline">Amount Due</div>
+              <div className="md:hidden">{textAndHeaders.total}</div>
+              <div className="hidden md:inline">{textAndHeaders.amount}</div>
               <div className="font-bold text-2xl">{formatPrice(invoice.total)}</div>
             </div>
-
           </div>
         </>
       </div>

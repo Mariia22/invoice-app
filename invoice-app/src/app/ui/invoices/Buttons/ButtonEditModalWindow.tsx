@@ -4,6 +4,7 @@ import { ModalFormType } from "@/app/lib/types";
 import { FormWindow } from "@/app/providers";
 import { useContext } from "react";
 import Button from "../../shared/Button";
+import { buttonNames } from "@/app/lib/const";
 
 export default function ButtonEditModalWindow({isDisabled}:{isDisabled:boolean}) {
   const { setFormModal } = useContext(FormWindow) as ModalFormType
@@ -17,6 +18,6 @@ export default function ButtonEditModalWindow({isDisabled}:{isDisabled:boolean})
       disabled={isDisabled}
       style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale hover:bg-secondaryPale md:py-4 md:px-6"
       onClick={openModalForDeletingInvoice}
-      text="Edit" />
+      text={buttonNames.edit} />
   )
 }

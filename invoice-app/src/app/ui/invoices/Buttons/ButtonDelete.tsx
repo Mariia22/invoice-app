@@ -4,6 +4,7 @@ import { ModalType } from "@/app/lib/types";
 import { ModalWindow } from "@/app/providers";
 import { useContext } from "react";
 import Button from "../../shared/Button";
+import { buttonNames } from "@/app/lib/const";
 
 export default function ButtonDelete() {
   const { setOpenModal } = useContext(ModalWindow) as ModalType;
@@ -16,6 +17,6 @@ export default function ButtonDelete() {
     <Button
       style="bg-contrast text-text hover:bg-contrastPale md:py-4 md:px-6"
       onClick={openModalForDeletingInvoice}
-      text="Delete" />
+      text={buttonNames.delete} />
   )
 }

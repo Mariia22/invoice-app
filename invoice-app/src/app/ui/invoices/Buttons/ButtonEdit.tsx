@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import Button from "../../shared/Button";
+import { buttonNames } from "@/app/lib/const";
 
 export default function ButtonEdit({ id }: { id: string }) {
   const router = useRouter();
@@ -14,6 +15,6 @@ export default function ButtonEdit({ id }: { id: string }) {
     <Button
       style="bg-tableColor dark:bg-headerBackground text-secondary dark:text-secondaryPale hover:bg-secondaryPale"
       onClick={editInvoice}
-      text="Edit" />
+      text={buttonNames.edit} />
   )
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import { buttonNames } from "@/app/lib/const"
 import Button from "../../shared/Button"
 
 type ButtonPaidProps = {
@@ -15,7 +16,7 @@ export default function ButtonPaid({ disabled, handleClick }: ButtonPaidProps) {
         style="bg-primary text-text hover:bg-primaryPale md:py-4 md:px-6 md:h-12"
         type="submit"
         disabled={disabled}
-        text="Mark as Paid" />
+        text={buttonNames.paid} />
     </form>
   )
 

@@ -3,6 +3,7 @@
 import { FormInput, Status } from "@/app/lib/types"
 import Button from "../../shared/Button"
 import { useState } from "react";
+import { buttonNames } from "@/app/lib/const";
 
 type ButtonProps = {
   isSubmitting: boolean,
@@ -23,7 +24,7 @@ export default function ButtonSaveDraft({ isSubmitting, onClick }: ButtonProps) 
       disabled={isSubmitting}
       name={Status.Draft}
       style="bg-draftColor text-secondaryDark"
-      text={isSubmitting && isClicking ? "Submitting" : "Save as Draft"}
+      text={isSubmitting && isClicking ? buttonNames.submitting : buttonNames.saveDraft}
       onClick={handleClick} />
   )
 }

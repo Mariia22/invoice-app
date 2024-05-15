@@ -1,6 +1,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "../../../prisma/client";
 import { Client, Invoice, Item, Status } from "./types";
+import { errorMessage, textAndHeaders } from "./const";
 
 export async function getAllInvoices (){
   noStore ();
@@ -19,7 +20,7 @@ export async function getAllInvoices (){
     return data
 
   } catch (error){
-    console.error('Database Error: Failed to Get Invoices') ;
+    console.error(errorMessage.failedGetInvoices) ;
   }
 }
 
@@ -42,7 +43,7 @@ export async function getInvoiceById (id:string) {
 
     return data
   } catch (error){
-    console.error('Database Error: Failed to Get Invoice by Id');
+    console.error(errorMessage.failedGetInvoiceById);
   }
 }
 
@@ -77,7 +78,7 @@ export async function getInvoiceById (id:string) {
     return data
 
   } catch (error){
-    console.error('Database Error: Failed to Get Invoices');
+    console.error(errorMessage.failedGetInvoices);
   }
  }
 
@@ -92,10 +93,10 @@ export async function getInvoiceById (id:string) {
         status: Status.Paid
       }
     })
-     if(!updateInvoice) { throw new Error("The status wasn't changed")}
+     if(!updateInvoice) { throw new Error(errorMessage.failedChangeStatusToPaid)}
   }
   catch (error) { 
-    return { message: 'Database Error: Failed to Change status to Paid' };
+    return { message: errorMessage.failedChangeStatusToPaid};
   }
  }
 
@@ -107,10 +108,10 @@ export async function getInvoiceById (id:string) {
         id: id
       }
     })
-     if(!deleteInvoice) {throw new Error("The status wasn't removed")}
+     if(!deleteInvoice) {throw new Error(errorMessage.failedDeleteInvoice)}
   }
   catch (error) { 
-    return { message: 'Database Error: Failed to Delete Invoice' };
+    return { message: errorMessage.failedDeleteInvoice};
   }
  }
 
@@ -145,7 +146,7 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(!newClient) {throw new Error("The client wasn't created")}
+    if(!newClient) {throw new Error(errorMessage.failedCreateInvoice)}
 
     const newInvoice = await prisma?.invoice.create({
       data:{
@@ -178,10 +179,10 @@ export async function getInvoiceById (id:string) {
       }
     }})
 
-     if(!newInvoice) {throw new Error("The invoice wasn't created")}
+     if(!newInvoice) {throw new Error(errorMessage.failedCreateInvoice)}
   }
   catch (error) { 
-    return { message: 'Database Error: Failed to Create Invoice' };
+    return { message: errorMessage.failedCreateInvoice };
   }
  }
 
@@ -223,7 +224,7 @@ export async function getInvoiceById (id:string) {
       }
     })
 
-    if(!updateInvoice) {throw new Error("The invoice wasn't updated")}
+    if(!updateInvoice) {throw new Error(errorMessage.failedUpdateInvoice)}
     if(invoiceItems.length > 0){
       const updateInvoiceItems =  await prisma?.item.deleteMany({
         where:{ 
@@ -231,7 +232,7 @@ export async function getInvoiceById (id:string) {
         }
       })
       
-    if(!updateInvoiceItems) {throw new Error("The items weren't updated")}
+    if(!updateInvoiceItems) {throw new Error(errorMessage.failedUpdateItem)}
 
     for (let item of invoiceItems) {
         const newItem = await prisma.item.create({
@@ -243,16 +244,16 @@ export async function getInvoiceById (id:string) {
             invoiceId: invoice.id
           }
         })
-          if(!newItem) {throw new Error("The item wasn't created")}
+          if(!newItem) {throw new Error(errorMessage.failedCreateItem)}
       }
     }
 
     return {
       status: "success",
-      message: "The invoice was changed",
+      message: textAndHeaders.changeInvoice,
     }
 
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice' };
+    return { message: errorMessage.failedUpdateInvoice };
   }
  }

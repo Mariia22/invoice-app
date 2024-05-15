@@ -1,3 +1,4 @@
+import { buttonNames } from "@/app/lib/const";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,6 +10,6 @@ export default function ButtonAdd() {
       <div className="flex items-center justify-center rounded-full w-8 h-8 mx-[6px] my-[6px] font-bold bg-text">
         <Image src="/assets/icon-plus.svg" width={11} height={11} alt="Add invoice" />
       </div>
-      New
+      {buttonNames.new}
     </Link>)
 }

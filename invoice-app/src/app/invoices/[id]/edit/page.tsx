@@ -1,3 +1,4 @@
+import { buttonNames } from "@/app/lib/const";
 import { getInvoiceById } from "@/app/lib/db";
 import { Invoice } from "@/app/lib/types";
 import ButtonBack from "@/app/ui/invoices/Buttons/ButtonBack";
@@ -16,7 +17,7 @@ export default async function EditPage({ params }: { params: { id: string } }) {
     <>
       <div className="pt-8 px-6 bg-text dark:bg-darkText">
         <ButtonBack url={`/invoices/${params.id}`} />
-        <div className="mt-6 text-2xl font-bold text-headerText dark:text-text">Edit <IdHeadline id={params.id} /></div>
+        <div className="mt-6 text-2xl font-bold text-headerText dark:text-text">{buttonNames.edit}<IdHeadline id={params.id} /></div>
       </div>
       <FormInvoice isEditing={true} invoice={invoice} isModal={true} url={`/invoices/${params.id}`} />
     </>)

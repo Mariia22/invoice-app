@@ -1,5 +1,6 @@
 "use client";
 
+import { buttonNames } from "@/app/lib/const";
 import { ModalFormType } from "@/app/lib/types";
 import { FormWindow } from "@/app/providers";
 import Image from "next/image";
@@ -13,6 +14,6 @@ export default function ButtonAddModalWindow() {
       <div className="flex items-center justify-center rounded-full w-8 h-8 mx-[6px] my-[6px] font-bold bg-text">
         <Image src="/assets/icon-plus.svg" width={11} height={11} alt="Add invoice" />
       </div>
-      New Invoice
+      {buttonNames.newInvoice}
     </button>)
 }
